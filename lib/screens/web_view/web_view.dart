@@ -30,9 +30,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            return NavigationDecision.navigate;
-          },
+          onNavigationRequest: (NavigationRequest request) => NavigationDecision.navigate,
         ),
       )
       ..loadRequest(Uri.parse(widget.url));
