@@ -1,6 +1,7 @@
 import 'package:e_plaza_vendor/dialogs/popup_menu.dart';
 import 'package:e_plaza_vendor/utils/const.dart';
 import 'package:e_plaza_vendor/utils/helper.dart';
+import 'package:e_plaza_vendor/utils/logger.dart';
 import 'package:e_plaza_vendor/values/dimen.dart';
 import 'package:e_plaza_vendor/values/size_config.dart';
 import 'package:e_plaza_vendor/widgets/my_network_image.dart';
@@ -41,7 +42,8 @@ class ProductItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: MyNetworkImage(
-              path: 'https://images.meesho.com/images/products/228753704/1dmmv_512.webp',
+              path: Const.PRODUCT_IMAGE_PATH,
+              imageName: product.image_1.nullSafe,
               width: 25.w,
               height: 25.w,
               fit: BoxFit.fitHeight,
@@ -123,7 +125,7 @@ class ProductItem extends StatelessWidget {
                       ),
                       Spacer(),
                       Text(
-                        '29 Nov',
+                        Helper.format(product.createdAt.nullSafe, Helper.DATE_FORMAT_3),
                         style: MyTextStyle(fontSize: fontSizeSmall, color: Colors.grey.shade600),
                       ),
                       Helper.spaceHorizontal(12),

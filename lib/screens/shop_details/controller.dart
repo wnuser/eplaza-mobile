@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart' as dio;
 import 'package:e_plaza_vendor/dialogs/image_pick_option_dialog.dart';
 import 'package:e_plaza_vendor/modals/result.dart';
-import 'package:e_plaza_vendor/modals/shop_details.dart';
 import 'package:e_plaza_vendor/screens/home/home_page_w.dart';
 import 'package:e_plaza_vendor/utils/const.dart';
 import 'package:e_plaza_vendor/utils/data/cities.dart';
@@ -12,7 +11,7 @@ import 'package:e_plaza_vendor/utils/preference.dart';
 import 'package:e_plaza_vendor/utils/toasty.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+
 // import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../data_provider/repository.dart';
@@ -24,6 +23,7 @@ class Controller extends GetxController {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final RxList<Category> categories = <Category>[].obs;
+  final RxList<Category> selectedCategories = <Category>[].obs;
   final Rx<Result> loginResult = Result().obs;
   final RxBool obSecureText = true.obs;
   final Rx<File> aadharCard = File('').obs;
@@ -39,7 +39,7 @@ class Controller extends GetxController {
   final TextEditingController isShopController = TextEditingController();
   final TextEditingController aadharNoController = TextEditingController();
   String countryName = '';
-  String categoryId = '';
+  List<int> selectedCategoryIds = <int>[];
   bool _locationFetched = false;
 
   // FacebookLogin facebookLogin = FacebookLogin();
@@ -133,21 +133,33 @@ class Controller extends GetxController {
         }
       }
 
-      if (aadharCard.value.path.empty) {
-        Toasty.failed('Please select aadhar card!');
-        return;
-      }
+      // if (aadharCard.value.path.empty) {
+      //   Toasty.failed('Please select aadhar card!');
+      //   return;
+      // }
       status.value = Status.PROGRESS;
 
-      dio.MultipartFile aadharCardMulti = await dio.MultipartFile.fromFile(
-        aadharCard.value.path,
-      );
+      dio.MultipartFile? aadharCardMulti = null;
+      dio.MultipartFile? shopImage1 = null;
+      dio.MultipartFile? shopImage2 = null;
 
-      dio.MultipartFile? shopImage1 =
-          images.length > 0 ? await dio.MultipartFile.fromFile(images[0].path) : null;
+      if (aadharCard.value.path.notEmpty && !aadharCard.value.path.startsWith('http')) {
+        // print(aadharCard.value.path);
+        aadharCardMulti = await dio.MultipartFile.fromFile(aadharCard.value.path);
+      }
 
-      dio.MultipartFile? shopImage2 =
-          images.length > 1 ? await dio.MultipartFile.fromFile(images[1].path) : null;
+      if (images.length > 0 && !images[0].path.startsWith('http')) {
+        shopImage1 = await dio.MultipartFile.fromFile(images[0].path);
+      }
+
+      if (images.length > 1 && !images[1].path.startsWith('http')) {
+        shopImage2 = await dio.MultipartFile.fromFile(images[1].path);
+      }
+
+      // print('IMAGE 1 : ' + aadharCardMulti!.filename.nullSafe + " : " + aadharCardMulti.length.toString());
+      // print('IMAGE 2 : ' + shopImage1!.filename.nullSafe + " : " + shopImage1.length.toString());
+      // print('IMAGE 3 : ' + shopImage2!.filename.nullSafe + " : " + shopImage2.length.toString());
+      // return;
 
       var response = await Repository.instance.addShop(
         vendorId: Preference.user.id.nullSafe,
@@ -159,7 +171,7 @@ class Controller extends GetxController {
         aadharCardNumber: aadharNoController.text,
         businessType: businessTypeController.text,
         turnOver: turnOverController.text,
-        categoryId: categoryId,
+        categoryId: selectedCategoryIds,
         isGrahudhyog: isShopController.text,
         aadharImage: aadharCardMulti,
       );

@@ -1,3 +1,4 @@
+import 'package:e_plaza_vendor/dialogs/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -65,16 +66,24 @@ class OrderDetailsScreen extends StatelessWidget {
         ),
         Helper.spaceHorizontal(6),
         Expanded(
-          child: OutlinedButton(
-            onPressed: () {
-            },
-            style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                backgroundColor: ThemeColors.offWhite,
-                side: BorderSide(color: Colors.grey.shade300, width: 1)),
-            child: const Text(
-              'Change Status',
-              style: MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.w400),
+          child: MyPopupMenuButton(
+            title: 'Change Status',
+            list: [
+              'Accept Order',
+              'Cancel Order',
+              'Complete Order',
+            ],
+            onSelected: (s) {},
+            child: OutlinedButton(
+              onPressed: null,
+              style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  backgroundColor: ThemeColors.offWhite,
+                  side: BorderSide(color: Colors.grey.shade300, width: 1)),
+              child: const Text(
+                'Change Status',
+                style: MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.w400),
+              ),
             ),
           ),
         ),

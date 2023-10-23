@@ -1,13 +1,14 @@
+import 'package:e_plaza_vendor/modals/config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:e_plaza_vendor/modals/config.dart';
 
 import '../data_provider/api_keys.dart';
 
 class Const {
   // ignore: constant_identifier_names
-  static const EMAIL_VERIFICATION_LINK = ApiKeys.baseUrl +
-      "57fe55ac900525062fd0760984d0578b?s=";
+
+  static const PRODUCT_IMAGE_PATH = '${ApiKeys.baseUrl}images/products/';
+  static const SHOP_IMAGE_PATH = '${ApiKeys.baseUrl}images/shops/';
 
   static final RxInt notificationCount = 0.obs;
   static const razorPayKey = 'rzp_test_lOilWsb6wjCV3t';
@@ -20,7 +21,6 @@ class Const {
   static double loaderSize = 80;
 
   static String currencySymbol = 'Rs.';
-  static List<int> templateAmounts = [10, 20, 30, 40, 50, 60];
 
   static String timeZone = '';
   static String packageName = '';
@@ -31,21 +31,7 @@ class Const {
 
   static final testDeviceIds = ['7ed51f79947ea050', '7804d9f813b8dd79'];
 
-  static const alphabets = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M'
-  ];
+  static final String RAZOR_PAY_KEY = 'rzp_test_t5iZW5T9wO9dF0';
 }
 
 class Status {

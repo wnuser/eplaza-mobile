@@ -1,10 +1,11 @@
-import 'package:e_plaza_vendor/screens/components/social_buttons.dart';
-import 'package:e_plaza_vendor/screens/otp_verify/otp_verify.dart';
 import 'package:e_plaza_vendor/utils/helper.dart';
+import 'package:e_plaza_vendor/values/dimen.dart';
 import 'package:e_plaza_vendor/values/size_config.dart';
 import 'package:e_plaza_vendor/values/theme_colors.dart';
 import 'package:e_plaza_vendor/widgets/primary_button.dart';
 import 'package:e_plaza_vendor/widgets/widgets.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -55,12 +56,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             Container(
-              height: 95.h,
+              height: 97.h,
               width: 100.w,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Helper.spaceVertical(3.h),
+                  Helper.spaceVertical(2.h),
                   assetImage('assets/icons/logo.png', width: 60.w, fit: BoxFit.fitWidth),
                   Helper.spaceVertical(1.h),
                   Expanded(
@@ -84,13 +85,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           key: _controller.formKey,
                           child: Column(
                             children: [
-                              Helper.spaceVertical(3.h),
+                              Helper.spaceVertical(2.h),
                               Text(
                                 'Sign Up',
                                 style: MyTextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
                               ),
-                              Helper.spaceVertical(3.h),
+                              Helper.spaceVertical(2.h),
                               NormalTextField(
                                 label: 'First Name',
                                 controller: _controller.fNameController,
@@ -113,8 +114,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               NormalTextField(
                                 label: 'Password',
                                 controller: _controller.passwordController,
-                                validator: Helper.passwordValidator,
+                                validator: _controller.validatePassword,
                                 obSecure: true,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      CupertinoIcons.info_circle_fill,
+                                      size: 20,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                    Helper.spaceHorizontal(6),
+                                    Expanded(
+                                        child: Text(
+                                      'Password Must Contain Symbol, Number, Uppercase letter and Lowercase letter',
+                                      style: MyTextStyle(fontSize: fontSizeSmall),
+                                    )),
+                                  ],
+                                ),
                               ),
                               Helper.spaceVertical(2.h),
                               NormalTextField(
@@ -122,6 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 controller: _controller.cellNoController,
                                 inputType: TextInputType.phone,
                                 validator: Helper.emptyValidator,
+                                maxLength: 10,
                               ),
                               Helper.spaceVertical(2.h),
                               NormalTextField(
@@ -129,6 +151,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 controller: _controller.zipCodeController,
                                 inputType: TextInputType.number,
                                 validator: Helper.emptyValidator,
+                                maxLength: 8,
                               ),
                               Helper.spaceVertical(4.h),
                               PrimaryButton(
@@ -139,17 +162,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: 'SIGNUP',
                               ),
                               Helper.spaceVertical(2.h),
-                              const Text(
-                                'Or sign in with',
-                                style: MyTextStyle(fontWeight: FontWeight.w300),
-                              ),
-                              Helper.spaceVertical(16),
-                              SocialButtons(
-                                facebook: () {},
-                                google: () {},
-                                instagram: () {},
-                              ),
-                              Helper.spaceVertical(16),
+                              // const Text(
+                              //   'Or sign in with',
+                              //   style: MyTextStyle(fontWeight: FontWeight.w300),
+                              // ),
+                              // Helper.spaceVertical(16),
+                              // SocialButtons(
+                              //   facebook: () {},
+                              //   google: () {},
+                              //   instagram: () {},
+                              // ),
+                              // Helper.spaceVertical(16),
                             ],
                           ),
                         ),
@@ -157,17 +180,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   Helper.spaceVertical(2.h),
-                  const Text(
-                    'Already have an Account?',
-                    style: MyTextStyle(fontWeight: FontWeight.w300),
+                  RichText(
+                    text: TextSpan(
+                        text: 'Already have an Account? ',
+                        style: MyTextStyle(fontWeight: FontWeight.w300),
+                        children: [
+                          TextSpan(
+                            text: 'SIGN IN',
+                            style: MyTextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: ThemeColors.colorPrimary,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()..onTap = Get.back,
+                          )
+                        ]),
                   ),
-                  Helper.spaceVertical(2.h),
-                  PrimaryButton.outline(
-                    onPressed: Get.back,
-                    child: 'SIGN IN',
-                    width: (100 - ((cp * 4) + 2)).w,
-                    height: 7.h,
-                  ),
+                  // Helper.spaceVertical(2.h),
+                  // PrimaryButton.outline(
+                  //   onPressed: Get.back,
+                  //   child: 'SIGN IN',
+                  //   width: (100 - ((cp * 4) + 2)).w,
+                  //   height: 7.h,
+                  // ),
                 ],
               ),
             ),

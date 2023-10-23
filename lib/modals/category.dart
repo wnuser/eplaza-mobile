@@ -30,4 +30,9 @@ class Category {
     map['updatedAt'] = updatedAt;
     return map;
   }
+
+  @override
+  String toString() {
+    return 'Category{id: $id, name: $name, image: $image, description: $description, status: $status, createdAt: $createdAt, updatedAt: $updatedAt}';
+  }
 }

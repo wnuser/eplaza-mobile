@@ -12,6 +12,7 @@ class Preference {
   static const _userKey = 'user_5684';
   // static User? _user;
   static String _tokenKey = 'TOKEN';
+  static String _shopId = 'shopId';
 
   static late SharedPreferences _pref;
 
@@ -46,6 +47,10 @@ class Preference {
   static String get token => _pref.getString(_tokenKey).nullSafe;
 
   static set token(String token) => _pref.setString(_tokenKey, token);
+
+  static String get shopId => _pref.getString(_shopId).placeholder('22');
+
+  static set shopId(String shopId) => _pref.setString(_shopId, shopId);
 
   static void clear() {
     _pref.clear();

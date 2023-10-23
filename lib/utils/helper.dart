@@ -27,8 +27,6 @@ import 'logger.dart';
 typedef RefreshCallback = void Function();
 
 class Helper {
-  // static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
   static const String DATE_FORMAT_1 = "yyyy_MM_dd_HH_mm_ss";
   static const String DATE_FORMAT_2 = "yyyy-MM-dd HH:mm:ss";
   static const String DATE_FORMAT_3 = "dd MMM yyyy, hh:mm a";
@@ -198,8 +196,6 @@ class Helper {
     if (string == null || string.isEmpty) {
       return 'Please fill this field!';
     }
-
-    print(string);
 
     if (string.length < 8) {
       return 'Password should have a minimum length of 8 characters';
@@ -375,14 +371,7 @@ class Helper {
   }
 
   static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    if (lat1 == null ||
-        lat2 == null ||
-        lon1 == null ||
-        lon2 == null ||
-        lat1 <= 0.0 ||
-        lat2 <= 0 ||
-        lon1 <= 0 ||
-        lon2 <= 0) {
+    if (lat1 <= 0.0 || lat2 <= 0 || lon1 <= 0 || lon2 <= 0) {
       return -1;
     }
 

@@ -1,10 +1,12 @@
 import 'package:e_plaza_vendor/utils/const.dart';
 import 'package:e_plaza_vendor/utils/helper.dart';
 import 'package:get/get.dart';
+
 // import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../data_provider/repository.dart';
 import '../../modals/plan.dart';
+import '../../modals/shop_details.dart';
 import '../../modals/slide.dart';
 import '../../modals/subscription.dart';
 import '../../utils/preference.dart';
@@ -17,6 +19,7 @@ class Controller extends GetxController {
   @override
   void onInit() {
     init(showLoader: true);
+    getShopDetails();
     super.onInit();
   }
 
@@ -70,4 +73,20 @@ class Controller extends GetxController {
     subscriptions.refresh();
     // status.value = Status.NORMAL;
   }
+
+  void getShopDetails() async {
+    var response = await Repository.instance.getShopDetails();
+    if (response.isNotEmpty) {
+      ShopDetails details = ShopDetails.fromJson(response[0]);
+      Preference.shopId = details.id.nullSafe;
+    }
+  }
 }
+
+
+
+
+
+
+
+

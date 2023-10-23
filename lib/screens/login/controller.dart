@@ -28,7 +28,7 @@ class Controller extends GetxController {
 
   void init() {
     if (Helper.isDeveloper) {
-      emailController.text = 'testbrain.dev+16@gmail.com';
+      emailController.text = 'testbrain.dev@gmail.com';
       passwordController.text = 'Manish@123';
     }
   }
@@ -52,3 +52,8 @@ class Controller extends GetxController {
     }
   }
 }
+
+
+
+
+

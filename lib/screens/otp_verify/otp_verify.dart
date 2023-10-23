@@ -144,7 +144,16 @@ class _OtpVerifyScreenState extends State<OtpVerifyScreen> {
                   Helper.spaceVertical(4.w),
                   Spacer(),
                   FloatingActionButton(
-                    onPressed: _controller.verify,
+                    onPressed: () {
+                      _controller.verify();
+                      // if (kDebugMode) {
+                      //   //Temp Code
+                      //   Preference.setLogin(true);
+                      //   Preference.token =
+                      //       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYXRjaFBhc3N3b3JkIjpbeyJpZCI6NTIsImZpcnN0X25hbWUiOiJUZXN0IiwibGFzdF9uYW1lIjoiQnJhaW4iLCJlbWFpbCI6InRlc3RicmFpbi5kZXZAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkL0JYS091YUVYaFN1QzAvWWRjZ1hOdUp2cDFwSWRUZDFMNVhXV29wSXVpTkVXRTNVaHRUNkMiLCJtb2JpbGUiOiI3OTA2MjM0ODY2IiwidXNlcl90eXBlIjoyLCJzdGF0dXMiOjEsInppcF9jb2RlIjpudWxsLCJzb2NpYWxfaWQiOiIiLCJyZWdpc3Rlcl9vdHAiOiI2NjE2OTEiLCJpc192ZXJpZmllZCI6bnVsbCwiY2l0eSI6bnVsbCwiY3JlYXRlZEF0IjoiMjAyMy0xMC0wMVQxMjo1NjoyNy4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMy0xMC0wMVQxMjo1Njo0NC4wMDBaIn1d';
+                      //   Get.offAll(() => VerifiedScreen());
+                      // }
+                    },
                     backgroundColor: Colors.black,
                     child: Icon(Icons.arrow_forward_rounded),
                   ),

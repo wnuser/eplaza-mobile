@@ -34,9 +34,9 @@ class Controller extends GetxController {
     var response = await Repository.instance.verifyOtp(userId, ENTERED_OTP);
 
     if (response['success'] == true) {
-      User user = User.fromJson(response['data'][0]);
+      // User user = User.fromJson(response['data'][0]);
       Preference.setLogin(true);
-      Preference.setUser(user);
+      // Preference.setUser(user);
       Preference.token = response['jsontoken'];
       Toasty.success(response['message'].toString().placeholder('somethingWentWrong'.t));
       Get.offAll(() => VerifiedScreen());

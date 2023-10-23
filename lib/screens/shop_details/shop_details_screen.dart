@@ -9,8 +9,10 @@ import 'package:e_plaza_vendor/values/theme_colors.dart';
 import 'package:e_plaza_vendor/widgets/primary_button.dart';
 import 'package:e_plaza_vendor/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../dialogs/multi_select_dialog.dart' as own;
 import '../../modals/city.dart';
 import '../../utils/const.dart';
 import '../../widgets/normal_text_field.dart';
@@ -83,7 +85,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: SizedBox(
-                                  height: imgSize,
+                                  height: imgSize + 20,
                                   child: /*ListView(
                                     shrinkWrap: true,
                                     physics: BouncingScrollPhysics(),
@@ -94,13 +96,15 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
                                           : empty()),*/
                                       Obx(
                                     () => _controller.images.isNotEmpty
-                                        ? ListView.builder(
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.horizontal,
-                                            physics: NeverScrollableScrollPhysics(),
-                                            itemCount: _controller.images.length,
-                                            itemBuilder: _pickFileWidget,
-                                            // children: _controller.images.map(_pickFileWidget).toList(),
+                                        ? Center(
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.horizontal,
+                                              physics: NeverScrollableScrollPhysics(),
+                                              itemCount: _controller.images.length,
+                                              itemBuilder: _pickFileWidget,
+                                              // children: _controller.images.map(_pickFileWidget).toList(),
+                                            ),
                                           )
                                         : empty(),
                                     //   )
@@ -118,14 +122,37 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
                               Helper.spaceVertical(2.h),
                               Obx(
                                 () => _controller.categories.value != null
-                                    ? NormalTextField<Category>.dropdown(
+                                    ? NormalTextField<Category>.dropdownWithoutMenu(
                                         label: 'Category',
                                         controller: _controller.categoryController,
-                                        dropdownList: _controller.categories,
                                         validator: Helper.emptyValidator,
-                                        onSelected: (s) {
-                                          _controller.categoryId = s.id.nullSafe;
-                                          return s.name.nullSafe;
+                                        // dropdownList: _controller.categories,
+                                        // onSelected: (s) {
+                                        //   _controller.categoryId = s.id.nullSafe;
+                                        //   return s.name.nullSafe;
+                                        // },
+                                        onTap: () {
+                                          own.MultiSelectDialog<Category>(context,
+                                              title: 'Select Category',
+                                              itemTitle: (c) => c.name.nullSafe,
+                                              list: _controller.categories,
+                                              selected: _controller.selectedCategories,
+                                              onSelected: (li1) {
+                                                List<Category> li = [...li1];
+
+                                                String cats = _controller.selectedCategories
+                                                    .map((e) => e.name.nullSafe)
+                                                    .join(',');
+                                                _controller.categoryController.text = cats;
+
+                                                _controller.selectedCategoryIds = _controller
+                                                    .selectedCategories
+                                                    .map((e) => e.id.toInt)
+                                                    .toList();
+
+                                                _controller.selectedCategories.clear();
+                                                _controller.selectedCategories.addAll(li);
+                                              });
                                         },
                                       )
                                     : empty(),
@@ -167,10 +194,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
                                 label: 'Is Shop/Grah Udyog',
                                 controller: _controller.isShopController,
                                 validator: Helper.emptyValidator,
-                                dropdownList: [
-                                  'Shop',
-                                  'Grah Udyog',
-                                ],
+                                dropdownList: ['Shop', 'Grah Udyog'],
                                 onSelected: (String value) => value,
                               ),
                               Helper.spaceVertical(2.h),
@@ -178,7 +202,9 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
                                 label: 'Shop owner aadhar No.',
                                 controller: _controller.aadharNoController,
                                 inputType: TextInputType.number,
-                                validator: Helper.emptyValidator,
+                                // validator: Helper.emptyValidator,
+                                maxLength: 12,
+                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                               ),
                               Helper.spaceVertical(2.h),
                               Obx(
@@ -247,48 +273,54 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
 
   Widget _pickFileWidget(c, i) {
     File? image = _controller.images[i];
-    return Container(
-      width: imgSize,
-      height: imgSize,
-      margin: EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey.shade400, width: 1)),
-      child: image.path.notEmpty
-          ? Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.file(
-                    image,
-                    width: imgSize,
-                    height: imgSize,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: smallIcon(
-                      Icons.close,
-                      () {
-                        _controller.images[i] = File('');
-                      },
-                      color: Colors.white,
-                      size: 24,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: imgSize,
+          height: imgSize,
+          margin: EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey.shade400, width: 1)),
+          child: image.path.notEmpty
+              ? Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(image, width: imgSize, height: imgSize),
                     ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: smallIcon(
+                          Icons.close,
+                          () {
+                            _controller.images[i] = File('');
+                          },
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : TextButton(
+                  onPressed: _controller.pickShopImage,
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.all(imgSize / 4),
                   ),
+                  child: assetImage('assets/icons/camera.png'),
                 ),
-              ],
-            )
-          : TextButton(
-              onPressed: _controller.pickShopImage,
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.all(imgSize / 4),
-              ),
-              child: assetImage('assets/icons/camera.png'),
-            ),
+        ),
+        Helper.spaceVertical(3),
+        Text(
+          i == 0 ? 'Logo' : 'Shop Image',
+          style: MyTextStyle(fontSize: fontSizeSmall),
+        )
+      ],
     );
   }
 }

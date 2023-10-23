@@ -17,6 +17,10 @@ class DeliveryTime {
             : (timeFormat == 2 ? ' hours' : (timeFormat == 3 ? ' days' : '')));
   }
 
+
+  DeliveryTime.test(
+      this.id, this.minTime, this.maxTime, this.timeFormat, this.createdAt, this.updatedAt);
+
   DeliveryTime();
 
   DeliveryTime.fromJson(dynamic json) {

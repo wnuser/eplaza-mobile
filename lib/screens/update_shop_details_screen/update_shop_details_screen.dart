@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:e_plaza_vendor/utils/helper.dart';
 import 'package:e_plaza_vendor/values/size_config.dart';
 import 'package:e_plaza_vendor/widgets/app_bar.dart';
+import 'package:e_plaza_vendor/widgets/my_network_image.dart';
 import 'package:e_plaza_vendor/widgets/primary_button.dart';
 import 'package:e_plaza_vendor/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/const.dart';
+import '../../dialogs/multi_select_dialog.dart' as own;
 import '../../modals/category.dart';
 import '../../modals/city.dart';
 import '../../utils/data/cities.dart';
@@ -50,123 +52,150 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
                   SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 6.w),
-                      child: Column(
-                        children: <Widget>[
-                          Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: SizedBox(
-                                  height: imgSize,
-                                  child: /*ListView(
-                                    shrinkWrap: true,
-                                    physics: BouncingScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    children: [
-                                      Obx(() => _controller.images.length < 2
-                                          ? _pickFileWidget(null)
-                                          : empty()),*/
-                                      Obx(
-                                    () => _controller.images.isNotEmpty
-                                        ? Center(
-                                            child: ListView.builder(
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.horizontal,
-                                              physics: NeverScrollableScrollPhysics(),
-                                              itemCount: _controller.images.length,
-                                              itemBuilder: _pickFileWidget,
-                                              // children: _controller.images.map(_pickFileWidget).toList(),
-                                            ),
-                                          )
-                                        : empty(),
-                                    //   )
-                                    // ],
+                      child: Form(
+                        key: _controller.formKey,
+                        child: Column(
+                          children: <Widget>[
+                            Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SizedBox(
+                                    height: imgSize + 20,
+                                    child: /*ListView(
+                                      shrinkWrap: true,
+                                      physics: BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      children: [
+                                        Obx(() => _controller.images.length < 2
+                                            ? _pickFileWidget(null)
+                                            : empty()),*/
+                                        Obx(
+                                      () => _controller.images.isNotEmpty
+                                          ? Center(
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.horizontal,
+                                                physics: NeverScrollableScrollPhysics(),
+                                                itemCount: _controller.images.length,
+                                                itemBuilder: _pickFileWidget,
+                                                // children: _controller.images.map(_pickFileWidget).toList(),
+                                              ),
+                                            )
+                                          : empty(),
+                                      //   )
+                                      // ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Helper.spaceVertical(3.h),
-                              NormalTextField(
-                                label: 'Shop Name',
-                                controller: _controller.shopNameController,
-                                inputType: TextInputType.text,
-                                validator: Helper.emptyValidator,
-                              ),
-                              Helper.spaceVertical(2.h),
-                              Obx(
-                                () => _controller.categories.value != null
-                                    ? NormalTextField<Category>.dropdown(
-                                        label: 'Category',
-                                        controller: _controller.categoryController,
-                                        dropdownList: _controller.categories,
-                                        validator: Helper.emptyValidator,
-                                        onSelected: (s) {
-                                          _controller.categoryId = s.name.nullSafe;
-                                          return s.name.nullSafe;
-                                        },
-                                      )
-                                    : empty(),
-                              ),
-                              Helper.spaceVertical(2.h),
-                              NormalTextField<City>.dropdownWithSearch(
-                                label: 'City',
-                                controller: _controller.cityController,
-                                dropdownList: cities,
-                                validator: Helper.emptyValidator,
-                                onSelected: (c) {
-                                  _controller.cityController.text = c.name;
-                                  return c.name;
-                                },
-                              ),
-                              Helper.spaceVertical(2.h),
-                              NormalTextField(
-                                label: 'Shop Address',
-                                controller: _controller.addressController,
-                                inputType: TextInputType.text,
-                                validator: Helper.emptyValidator,
-                              ),
-                              Helper.spaceVertical(2.h),
-                              NormalTextField(
-                                label: 'Business Type',
-                                controller: _controller.businessTypeController,
-                                inputType: TextInputType.text,
-                                validator: Helper.emptyValidator,
-                              ),
-                              Helper.spaceVertical(2.h),
-                              NormalTextField(
-                                label: 'Turn Over',
-                                controller: _controller.turnOverController,
-                                inputType: TextInputType.text,
-                                validator: Helper.emptyValidator,
-                              ),
-                              Helper.spaceVertical(2.h),
-                              NormalTextField.dropdown(
-                                label: 'Is Shop/Grah Udyog',
-                                controller: _controller.isShopController,
-                                validator: Helper.emptyValidator,
-                                dropdownList: [
-                                  'Shop',
-                                  'Grah Udyog',
-                                ],
-                                onSelected: (String value) => value,
-                              ),
-                              Helper.spaceVertical(2.h),
-                              NormalTextField(
-                                label: 'Shop owner aadhar No.',
-                                controller: _controller.aadharNoController,
-                                inputType: TextInputType.number,
-                                validator: Helper.emptyValidator,
-                              ),
-                              Helper.spaceVertical(2.h),
-                              Obx(
-                                () => _img(
-                                    title: 'Shop owner aadhar image',
-                                    subTitle: 'Click to select',
-                                    file: _controller.aadharCard.value),
-                              ),
-                              Helper.spaceVertical(2.h),
-                            ],
-                          ),
-                        ],
+                                Helper.spaceVertical(3.h),
+                                NormalTextField(
+                                  label: 'Shop Name',
+                                  controller: _controller.shopNameController,
+                                  inputType: TextInputType.text,
+                                  validator: Helper.emptyValidator,
+                                ),
+                                Helper.spaceVertical(2.h),
+                                Obx(
+                                  () => _controller.categories.value != null
+                                      ? NormalTextField<Category>.dropdownWithoutMenu(
+                                          label: 'Category',
+                                          controller: _controller.categoryController,
+                                          validator: Helper.emptyValidator,
+                                          // dropdownList: _controller.categories,
+                                          // onSelected: (s) {
+                                          //   _controller.categoryId = s.id.nullSafe;
+                                          //   return s.name.nullSafe;
+                                          // },
+                                          onTap: () {
+                                            own.MultiSelectDialog<Category>(context,
+                                                title: 'Select Category',
+                                                itemTitle: (c) => c.name.nullSafe,
+                                                list: _controller.categories,
+                                                selected: _controller.selectedCategories,
+                                                onSelected: (li1) {
+                                                  List<Category> li = [...li1];
+
+                                                  String cats = _controller.selectedCategories
+                                                      .map((e) => e.name.nullSafe)
+                                                      .join(',');
+                                                  _controller.categoryController.text = cats;
+
+                                                  _controller.selectedCategoryIds = _controller
+                                                      .selectedCategories
+                                                      .map((e) => e.id.toInt)
+                                                      .toList();
+
+                                                  _controller.selectedCategories.clear();
+                                                  _controller.selectedCategories.addAll(li);
+                                                });
+                                          },
+                                        )
+                                      : empty(),
+                                ),
+                                Helper.spaceVertical(2.h),
+                                NormalTextField<City>.dropdownWithSearch(
+                                  label: 'City',
+                                  controller: _controller.cityController,
+                                  dropdownList: cities,
+                                  validator: Helper.emptyValidator,
+                                  onSelected: (c) {
+                                    _controller.cityController.text = c.name;
+                                    return c.name;
+                                  },
+                                ),
+                                Helper.spaceVertical(2.h),
+                                NormalTextField(
+                                  label: 'Shop Address',
+                                  controller: _controller.addressController,
+                                  inputType: TextInputType.text,
+                                  validator: Helper.emptyValidator,
+                                ),
+                                Helper.spaceVertical(2.h),
+                                NormalTextField(
+                                  label: 'Business Type',
+                                  controller: _controller.businessTypeController,
+                                  inputType: TextInputType.text,
+                                  validator: Helper.emptyValidator,
+                                ),
+                                Helper.spaceVertical(2.h),
+                                NormalTextField(
+                                  label: 'Turn Over',
+                                  controller: _controller.turnOverController,
+                                  inputType: TextInputType.text,
+                                  validator: Helper.emptyValidator,
+                                ),
+                                Helper.spaceVertical(2.h),
+                                NormalTextField.dropdown(
+                                  label: 'Is Shop/Grah Udyog',
+                                  controller: _controller.isShopController,
+                                  validator: Helper.emptyValidator,
+                                  dropdownList: [
+                                    'Shop',
+                                    'Grah Udyog',
+                                  ],
+                                  onSelected: (String value) => value,
+                                ),
+                                Helper.spaceVertical(2.h),
+                                NormalTextField(
+                                  label: 'Shop owner aadhar No.',
+                                  controller: _controller.aadharNoController,
+                                  inputType: TextInputType.number,
+                                  // validator: Helper.emptyValidator,
+                                  maxLength: 12,
+                                ),
+                                Helper.spaceVertical(2.h),
+                                Obx(
+                                  () => _img(
+                                      title: 'Shop owner aadhar image',
+                                      subTitle: 'Click to select',
+                                      file: _controller.aadharCard.value),
+                                ),
+                                Helper.spaceVertical(2.h),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -189,6 +218,7 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
                   ],
                 ),
                 onPressed: () {},
+                // onPressed: _controller.addShop,
               ),
             )
           ],
@@ -202,6 +232,7 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
     required String subTitle,
     required File file,
   }) {
+    print('IMG ::: '+file.path);
     return ListTile(
       title: Text(
         title,
@@ -211,7 +242,9 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
       leading: file.path.notEmpty
           ? ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: Image.file(file, width: 40, height: 40))
+              child: file.path.startsWith('http')
+                  ? MyNetworkImage(path: file.path, width: imgSize, height: imgSize)
+                  : Image.file(file, width: 40, height: 40))
           : Container(
               width: 45,
               height: 45,
@@ -231,44 +264,56 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
 
   Widget _pickFileWidget(c, i) {
     File? image = _controller.images[i];
-    return Container(
-      width: imgSize,
-      height: imgSize,
-      margin: EdgeInsets.symmetric(horizontal: 4),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey.shade400, width: 1)),
-      child: image.path.notEmpty
-          ? Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.file(image, width: imgSize, height: imgSize),
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: smallIcon(
-                      Icons.close,
-                      () {
-                        _controller.images[i] = File('');
-                      },
-                      color: Colors.white,
-                      size: 24,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: imgSize,
+          height: imgSize,
+          margin: EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey.shade400, width: 1)),
+          child: image.path.notEmpty
+              ? Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: image.path.startsWith('http')
+                          ? MyNetworkImage(path: image.path, width: imgSize, height: imgSize)
+                          : Image.file(image, width: imgSize, height: imgSize),
                     ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: smallIcon(
+                          Icons.close,
+                          () {
+                            _controller.images[i] = File('');
+                          },
+                          color: Colors.white,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : TextButton(
+                  onPressed: _controller.pickShopImage,
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.all(imgSize / 4),
                   ),
+                  child: assetImage('assets/icons/camera.png'),
                 ),
-              ],
-            )
-          : TextButton(
-              onPressed: _controller.pickShopImage,
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.all(imgSize / 4),
-              ),
-              child: assetImage('assets/icons/camera.png'),
-            ),
+        ),
+        Helper.spaceVertical(3),
+        Text(
+          i == 0 ? 'Logo' : 'Shop Image',
+          style: MyTextStyle(fontSize: fontSizeSmall),
+        )
+      ],
     );
   }
 }

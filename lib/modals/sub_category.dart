@@ -1,5 +1,5 @@
 class SubCategory {
-  num? id;
+  String? id;
   String? categoryId;
   String? name;
   String? image;
@@ -11,7 +11,7 @@ class SubCategory {
   SubCategory();
 
   SubCategory.fromJson(dynamic json) {
-    id = json['id'];
+    id = json['id'].toString();
     categoryId = json['category_id'].toString();
     name = json['name'];
     image = json['image'];

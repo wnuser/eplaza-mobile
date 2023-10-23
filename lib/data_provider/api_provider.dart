@@ -54,7 +54,7 @@ class ApiProvider {
 
   Options get _options {
     return Options(headers: {
-      'Authorization': 'Bearer ' + (Preference.isUserAvailable ? Preference.token : ""),
+      'Authorization': (Preference.isLogin ? 'Bearer ' + Preference.token : ""),
       // 'time_zone': Const.timeZone,
       'pn': Const.packageName,
       'vc': Const.versionCode,
@@ -63,7 +63,7 @@ class ApiProvider {
   }
 
   Future<List<dynamic>> getList() async {
-    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: parameters);
+    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: (parameters));
     if (enableParamsLogs) Logger.m(tag: 'API $endPoint Headers', value: _options.headers);
 
     try {
@@ -88,7 +88,7 @@ class ApiProvider {
   }
 
   Future<Result> getResult() async {
-    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: parameters);
+    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: (parameters));
     if (enableParamsLogs) Logger.m(tag: 'API $endPoint Headers', value: _options.headers);
 
     try {
@@ -110,7 +110,7 @@ class ApiProvider {
   }
 
   Future<dynamic> getDynamic() async {
-    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: parameters);
+    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: (parameters));
     if (enableParamsLogs) Logger.m(tag: 'API $endPoint Headers', value: _options.headers);
 
     try {
@@ -132,7 +132,7 @@ class ApiProvider {
   }
 
   Future<int> getInt() async {
-    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: parameters);
+    if (enableParamsLogs) Logger.m(tag: 'API $endPoint Params', value: (parameters));
     if (enableParamsLogs) Logger.m(tag: 'API $endPoint Headers', value: _options.headers);
 
     try {

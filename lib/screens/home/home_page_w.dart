@@ -1,6 +1,7 @@
 import 'package:e_plaza_vendor/screens/edit_user_profile/edit_user_profile_page.dart';
 import 'package:e_plaza_vendor/screens/manage_stores/manage_stores.dart';
 import 'package:e_plaza_vendor/screens/order_details/order_details_new.dart';
+import 'package:e_plaza_vendor/screens/order_listing/order_listing_screen.dart';
 import 'package:e_plaza_vendor/screens/splash_screen.dart';
 import 'package:e_plaza_vendor/utils/const.dart';
 import 'package:e_plaza_vendor/utils/helper.dart';
@@ -154,7 +155,7 @@ class _HomeScreen extends StatelessWidget {
                 _grid(
                   [
                     _cardItem('20', 'New Orders', 'assets/icons/active_services.png', () {
-                      Get.to(() => OrderDetailsScreen());
+                      Get.to(() => OrderListingScreen());
                     }),
                     _cardItem(
                         '20', 'Completed orders', 'assets/icons/inactive_services.png', () {}),

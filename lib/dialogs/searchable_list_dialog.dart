@@ -9,6 +9,7 @@ import 'package:e_plaza_vendor/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../modals/category.dart';
 import '../modals/sub_category.dart';
 import '../widgets/normal_text_field.dart';
 
@@ -109,6 +110,8 @@ class SearchableListDialog<T> {
       return Text(item.name.nullSafe, textAlign: _align, style: _textStyle);
     } else if (item is SubCategory) {
       return Text(item.name.nullSafe, textAlign: _align, style: _textStyle);
+    } else if (item is Category) {
+      return Text(item.name.nullSafe, textAlign: _align, style: _textStyle);
     }
     return empty();
   }
@@ -123,6 +126,7 @@ class SearchableListDialog<T> {
   }
 
   bool _isContain(T item, String keyword) {
+    print(item.toString());
     if (item is int || item is String || item is double) {
       return Helper.isContainKeyword(keyword, [item.toString()]);
     } else if (item is Country) {
@@ -134,6 +138,8 @@ class SearchableListDialog<T> {
     } else if (item is City) {
       return Helper.isContainKeyword(keyword, [item.name]);
     } else if (item is SubCategory) {
+      return Helper.isContainKeyword(keyword, [item.name.nullSafe]);
+    } else if (item is Category) {
       return Helper.isContainKeyword(keyword, [item.name.nullSafe]);
     }
     return false;

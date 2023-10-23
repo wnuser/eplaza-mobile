@@ -152,9 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Helper.spaceVertical(4.h),
                     PrimaryButton.outline(
-                      onPressed: () {
-                        Get.to(() => SignUpScreen());
-                      },
+                      onPressed: () => Get.to(() => SignUpScreen()),
                       child: 'SIGNUP',
                       width: (100 - ((cp * 4) + 2)).w,
                       height: 7.h,

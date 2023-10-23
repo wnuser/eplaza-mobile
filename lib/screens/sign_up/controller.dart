@@ -1,9 +1,12 @@
 import 'package:e_plaza_vendor/modals/result.dart';
+import 'package:e_plaza_vendor/modals/user.dart';
 import 'package:e_plaza_vendor/utils/const.dart';
 import 'package:e_plaza_vendor/utils/helper.dart';
+import 'package:e_plaza_vendor/utils/preference.dart';
 import 'package:e_plaza_vendor/utils/toasty.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 // import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../data_provider/repository.dart';
@@ -38,7 +41,7 @@ class Controller extends GetxController {
       lNameController.text = 'Brain';
       emailController.text = 'testbrain.dev@gmail.com';
       passwordController.text = 'Manish@123';
-      cellNoController.text = '1234567890';
+      cellNoController.text = '7906234866';
       zipCodeController.text = '123456';
     }
 
@@ -64,13 +67,30 @@ class Controller extends GetxController {
         '',
       );
 
-      if (data['success'] == true) {
-        Toasty.failed(data['message'].toString());
+      if (data['success'] == true || data['success'] == 'true' || data['success']) {
+        Toasty.success(data['message'].toString());
+        User user = User.fromJson(data['data']);
+        Preference.setUser(user);
+        Get.offAll(() => OtpVerifyScreen(data['data']['id'].toString()));
+      } else if(data != null && data['data'] != null && data['data']['id'] != null) {
+        User user = User.fromJson(data['data']);
+        Preference.setUser(user);
         Get.offAll(() => OtpVerifyScreen(data['data']['id'].toString()));
       } else {
         Toasty.failed(data['message'].toString().placeholder('somethingWentWrong'.t));
       }
       status.value = Status.NORMAL;
     }
+  }
+
+  String? validatePassword(String? value){
+    String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = new RegExp(pattern);
+    bool b =  regExp.hasMatch(value.nullSafe);
+
+    if(!b) {
+      return 'Please enter a strong password!';
+    }
+    return null;
   }
 }

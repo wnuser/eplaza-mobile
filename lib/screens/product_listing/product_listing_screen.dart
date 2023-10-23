@@ -79,6 +79,7 @@ class ProductListingScreen extends StatelessWidget {
                     list: _controller.categories,
                     onSelected: (c) {
                       _controller.category.value = c.name.nullStr;
+                      print(c.id);
                       _controller.filter(c.id);
                     },
                     child: Container(

@@ -30,6 +30,7 @@ class NormalTextField<T> extends StatelessWidget {
   List<TextInputFormatter>? inputFormatters;
   String? Function(String? value)? validator;
   InputBorder? border;
+  int? maxLength;
 
   NormalTextField({
     Key? key,
@@ -49,6 +50,7 @@ class NormalTextField<T> extends StatelessWidget {
     this.inputFormatters = const <TextInputFormatter>[],
     this.validator,
     this.border,
+    this.maxLength,
   }) : super(key: key);
 
   NormalTextField.dropdown({
@@ -67,6 +69,7 @@ class NormalTextField<T> extends StatelessWidget {
     this.inputFormatters = const <TextInputFormatter>[],
     this.validator,
     this.border,
+    this.maxLength,
   }) : super(key: key) {
     _fieldType = 'dropdown';
     enable = false;
@@ -88,6 +91,7 @@ class NormalTextField<T> extends StatelessWidget {
     this.inputFormatters = const <TextInputFormatter>[],
     this.validator,
     this.border,
+    this.maxLength,
   }) : super(key: key) {
     _fieldType = 'dropdownWithSearch';
     enable = false;
@@ -108,6 +112,7 @@ class NormalTextField<T> extends StatelessWidget {
     this.inputFormatters = const <TextInputFormatter>[],
     this.validator,
     this.border,
+    this.maxLength,
   }) : super(key: key) {
     _fieldType = 'dropdownWithoutMenu';
     enable = false;
@@ -169,6 +174,7 @@ class NormalTextField<T> extends StatelessWidget {
       onChanged: onChanged,
       minLines: minLines,
       maxLines: obSecure ? 1 : maxLines,
+      maxLength: maxLength ?? 2000,
       decoration: InputDecoration(
         isDense: true,
         hintText: label,
@@ -184,6 +190,7 @@ class NormalTextField<T> extends StatelessWidget {
         enabledBorder: border ?? underlineBorder,
         disabledBorder: border ?? underlineBorder,
         contentPadding: contentPadding/* ?? EdgeInsets.symmetric(vertical: 0.3.h)*/,
+        counterText: '',
         prefixText: prefixText,
         suffixIcon: _fieldType == 'normal'
             ? null

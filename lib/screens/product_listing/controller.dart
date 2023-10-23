@@ -115,7 +115,7 @@ class Controller extends GetxController {
     status.value = Status.NORMAL;
   }
 
-  void deleteProduct(num? id) {
+  void deleteProduct(String? id) {
     MyAlertDialog()
         // .setDefaultIcon()
         .setTitle('Delete Product?')
@@ -135,8 +135,8 @@ class Controller extends GetxController {
         .show();
   }
 
-  void filter(num? categoryId) {
+  void filter(String? categoryId) {
     products.clear();
-    products.addAll(productsMain.where((p0) => p0.categoryId == categoryId));
+    products.addAll(productsMain.where((p0) => p0.subCategoryId == categoryId));
   }
 }

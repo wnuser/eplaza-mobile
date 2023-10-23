@@ -88,10 +88,26 @@ class Repository {
     required String aadharCardNumber,
     required String businessType,
     required String turnOver,
-    required String categoryId,
+    required List<int> categoryId,
     required String isGrahudhyog,
     required MultipartFile? aadharImage,
   }) async {
+    // print({
+    //   'vendor_id': vendorId,
+    //   'shop_name': shopName,
+    //   'city': city,
+    //   'address': address,
+    //   'image_1': image1,
+    //   'image_2': image2,
+    //   'aadhar_card_number': aadharCardNumber,
+    //   'business_type': businessType,
+    //   'turn_over': turnOver,
+    //   'category_id': '[' + categoryId.join(',') + ']',
+    //   'is_grahudhyog': isGrahudhyog,
+    //   'aadhar_image': aadharImage,
+    // });
+    // return {'success': false, 'message': 'Test'};
+
     return ApiProvider('update/shop', parameters: {
       'vendor_id': vendorId,
       'shop_name': shopName,
@@ -102,7 +118,7 @@ class Repository {
       'aadhar_card_number': aadharCardNumber,
       'business_type': businessType,
       'turn_over': turnOver,
-      'category_id': categoryId,
+      'category_id': '[' + categoryId.join(',') + ']',
       'is_grahudhyog': isGrahudhyog,
       'aadhar_image': aadharImage,
     }).getDynamic();
@@ -113,7 +129,7 @@ class Repository {
     required String plan_id,
     required String plan_price,
     required String discount_price,
-    required String total_billing_amount,
+    required double total_billing_amount,
     required String duration,
   }) async {
     return ApiProvider('purchase/plan', parameters: {
@@ -135,6 +151,8 @@ class Repository {
   }
 
   Future<dynamic> addProduct({
+    required String productId,
+    required String shop_id,
     required String category_id,
     required String sub_category_id,
     required String vendor_id,
@@ -152,7 +170,10 @@ class Repository {
     required MultipartFile? image_2,
     required MultipartFile? image_3,
   }) async {
-    return ApiProvider('add/product', parameters: {
+    return ApiProvider(productId.notEmpty ? 'update/product' : 'add/product', parameters: {
+      'id': productId,
+      'productId': productId,
+      'shop_id': shop_id,
       'category_id': category_id,
       'sub_category_id': sub_category_id,
       'vendor_id': vendor_id,
@@ -172,15 +193,55 @@ class Repository {
     }).getDynamic();
   }
 
+  // Future<dynamic> updateProduct({
+  //   required String shop_id,
+  //   required String category_id,
+  //   required String sub_category_id,
+  //   required String vendor_id,
+  //   required String name,
+  //   required String price,
+  //   required String offer_price,
+  //   required String stock_quantity,
+  //   required String description,
+  //   required String shipping_policy,
+  //   required String refund_policy,
+  //   required String is_cancel_enabled,
+  //   required String is_return_enabled,
+  //   required String is_exchange_enabled,
+  //   required MultipartFile? image_1,
+  //   required MultipartFile? image_2,
+  //   required MultipartFile? image_3,
+  // }) async {
+  //   return ApiProvider('update/product', parameters: {
+  //     'shop_id': shop_id,
+  //     'category_id': category_id,
+  //     'sub_category_id': sub_category_id,
+  //     'vendor_id': vendor_id,
+  //     'name': name,
+  //     'price': price,
+  //     'offer_price': offer_price,
+  //     'stock_quantity': stock_quantity,
+  //     'description': description,
+  //     'shipping_policy': shipping_policy,
+  //     'refund_policy': refund_policy,
+  //     'is_cancel_enabled': is_cancel_enabled,
+  //     'is_return_enabled': is_return_enabled,
+  //     'is_exchange_enabled': is_exchange_enabled,
+  //     'image_1': image_1,
+  //     'image_2': image_2,
+  //     'image_3': image_3,
+  //   }).getDynamic();
+  // }
+
   Future<List<dynamic>> getProducts() {
-    return ApiProvider('products/' + Preference.user.id.nullSafe, method: 'get').getList();
+    return ApiProvider('products/' + Preference.shopId.nullSafe, method: 'get').getList();
   }
 
-  Future<Result> deleteProduct(num? id) async {
+  Future<Result> deleteProduct(String? id) async {
     return ApiProvider('product/delete/' + id.toString(), method: 'get').getResult();
   }
 
-  Future<dynamic> getProductDetails(num? id) async {
+  Future<dynamic> getProductDetails(String? id) async {
     return ApiProvider('product/' + id.toString(), method: 'get').getDynamic();
   }
 }
