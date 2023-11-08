@@ -43,7 +43,7 @@ class MyDrawer extends StatelessWidget {
                 _navItem('assets/icons/subscribe_outlined.png', 'Subscription', () {
                   Get.back();
                 }),
-                _navItem('assets/icons/edit_details_outlined.png', 'Edit business details', () {
+                _navItem('assets/icons/edit_details_outlined.png', 'Edit shop details', () {
                   Get.back();
                 }),
                 _navItem('assets/icons/insurance_outlined.png', 'Shipping Policy', () {

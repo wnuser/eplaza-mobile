@@ -44,7 +44,7 @@ class ManageStoresScreen extends StatelessWidget {
             _item('Delivery', 'assets/icons/delivery_truck.png', () {}),
             _item('Ads', 'assets/icons/advertising.png', () {}),
             _item('Subscription', 'assets/icons/subscription.png', () {}),
-            _item('Edit business\ndetails', 'assets/icons/business_details.png', () {
+            _item('Edit shop\ndetails', 'assets/icons/business_details.png', () {
               Get.to(() => UpdateShopDetailsScreen());
             }),
             _item('Shipping Policy', 'assets/icons/policy.png', () {}),

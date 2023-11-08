@@ -26,6 +26,7 @@ class Controller extends GetxController {
   final TextEditingController cellNoController = TextEditingController();
   final TextEditingController zipCodeController = TextEditingController();
   String countryName = '';
+  final RxBool obSecure = true.obs;
 
   Controller();
 

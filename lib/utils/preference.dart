@@ -48,7 +48,7 @@ class Preference {
 
   static set token(String token) => _pref.setString(_tokenKey, token);
 
-  static String get shopId => _pref.getString(_shopId).placeholder('22');
+  static String get shopId => _pref.getString(_shopId).placeholder('');
 
   static set shopId(String shopId) => _pref.setString(_shopId, shopId);
 

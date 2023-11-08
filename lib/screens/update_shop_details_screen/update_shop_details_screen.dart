@@ -97,41 +97,42 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
                                 ),
                                 Helper.spaceVertical(2.h),
                                 Obx(
-                                  () => _controller.categories.value != null
-                                      ? NormalTextField<Category>.dropdownWithoutMenu(
-                                          label: 'Category',
-                                          controller: _controller.categoryController,
-                                          validator: Helper.emptyValidator,
-                                          // dropdownList: _controller.categories,
-                                          // onSelected: (s) {
-                                          //   _controller.categoryId = s.id.nullSafe;
-                                          //   return s.name.nullSafe;
-                                          // },
-                                          onTap: () {
-                                            own.MultiSelectDialog<Category>(context,
-                                                title: 'Select Category',
-                                                itemTitle: (c) => c.name.nullSafe,
-                                                list: _controller.categories,
-                                                selected: _controller.selectedCategories,
-                                                onSelected: (li1) {
-                                                  List<Category> li = [...li1];
+                                  () {
+                                    _controller.categories.length;
+                                    return NormalTextField<Category>.dropdownWithoutMenu(
+                                      label: 'Category',
+                                      controller: _controller.categoryController,
+                                      validator: Helper.emptyValidator,
+                                      // dropdownList: _controller.categories,
+                                      // onSelected: (s) {
+                                      //   _controller.categoryId = s.id.nullSafe;
+                                      //   return s.name.nullSafe;
+                                      // },
+                                      onTap: () {
+                                        own.MultiSelectDialog<Category>(context,
+                                            title: 'Select Category',
+                                            itemTitle: (c) => c.name.nullSafe,
+                                            list: _controller.categories,
+                                            selected: _controller.selectedCategories,
+                                            onSelected: (li1) {
+                                              List<Category> li = [...li1];
 
-                                                  String cats = _controller.selectedCategories
-                                                      .map((e) => e.name.nullSafe)
-                                                      .join(',');
-                                                  _controller.categoryController.text = cats;
+                                              String cats = _controller.selectedCategories
+                                                  .map((e) => e.name.nullSafe)
+                                                  .join(',');
+                                              _controller.categoryController.text = cats;
 
-                                                  _controller.selectedCategoryIds = _controller
-                                                      .selectedCategories
-                                                      .map((e) => e.id.toInt)
-                                                      .toList();
+                                              _controller.selectedCategoryIds = _controller
+                                                  .selectedCategories
+                                                  .map((e) => e.id.toInt)
+                                                  .toList();
 
-                                                  _controller.selectedCategories.clear();
-                                                  _controller.selectedCategories.addAll(li);
-                                                });
-                                          },
-                                        )
-                                      : empty(),
+                                              _controller.selectedCategories.clear();
+                                              _controller.selectedCategories.addAll(li);
+                                            });
+                                      },
+                                    );
+                                  },
                                 ),
                                 Helper.spaceVertical(2.h),
                                 NormalTextField<City>.dropdownWithSearch(
@@ -232,7 +233,7 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
     required String subTitle,
     required File file,
   }) {
-    print('IMG ::: '+file.path);
+    print('IMG ::: ' + file.path);
     return ListTile(
       title: Text(
         title,
@@ -310,7 +311,7 @@ class _UpdateShopDetailsScreenState extends State<UpdateShopDetailsScreen> {
         ),
         Helper.spaceVertical(3),
         Text(
-          i == 0 ? 'Logo' : 'Shop Image',
+          i == 0 ? 'Interior' : 'Outer',
           style: MyTextStyle(fontSize: fontSizeSmall),
         )
       ],

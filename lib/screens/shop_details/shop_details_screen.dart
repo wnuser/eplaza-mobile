@@ -309,15 +309,13 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
                 )
               : TextButton(
                   onPressed: _controller.pickShopImage,
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.all(imgSize / 4),
-                  ),
+                  style: TextButton.styleFrom(padding: EdgeInsets.all(imgSize / 4)),
                   child: assetImage('assets/icons/camera.png'),
                 ),
         ),
         Helper.spaceVertical(3),
         Text(
-          i == 0 ? 'Logo' : 'Shop Image',
+          i == 0 ? 'Interior' : 'Outer',
           style: MyTextStyle(fontSize: fontSizeSmall),
         )
       ],

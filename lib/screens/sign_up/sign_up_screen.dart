@@ -111,11 +111,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 validator: Helper.emptyValidator,
                               ),
                               Helper.spaceVertical(2.h),
-                              NormalTextField(
-                                label: 'Password',
-                                controller: _controller.passwordController,
-                                validator: _controller.validatePassword,
-                                obSecure: true,
+                              Stack(
+                                children: [
+                                  Obx(()=> NormalTextField(
+                                      label: 'Password',
+                                      controller: _controller.passwordController,
+                                      validator: _controller.validatePassword,
+                                      obSecure: _controller.obSecure.value,
+                                    ),
+                                  ),
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: TextButton(
+                                          onPressed: () {
+                                            _controller.obSecure.value = !_controller.obSecure.value;
+                                          },
+                                          style: TextButton.styleFrom(shape: CircleBorder()),
+                                          child: Obx(
+                                                () => Icon(
+                                              _controller.obSecure.isTrue
+                                                  ? CupertinoIcons.eye_fill
+                                                  : CupertinoIcons.eye_slash_fill,
+                                            ),
+                                          ),))
+                                ],
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 4),

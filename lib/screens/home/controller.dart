@@ -1,5 +1,6 @@
 import 'package:e_plaza_vendor/utils/const.dart';
 import 'package:e_plaza_vendor/utils/helper.dart';
+import 'package:e_plaza_vendor/utils/logger.dart';
 import 'package:get/get.dart';
 
 // import 'package:package_info_plus/package_info_plus.dart';
@@ -79,6 +80,8 @@ class Controller extends GetxController {
     if (response.isNotEmpty) {
       ShopDetails details = ShopDetails.fromJson(response[0]);
       Preference.shopId = details.id.nullSafe;
+    }else{
+      Logger.e(tag: 'SHOP NOT FOUND', value: response);
     }
   }
 }

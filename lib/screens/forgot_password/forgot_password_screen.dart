@@ -1,34 +1,29 @@
-import 'package:e_plaza_vendor/screens/components/social_buttons.dart';
-import 'package:e_plaza_vendor/screens/sign_up/sign_up_screen.dart';
 import 'package:e_plaza_vendor/utils/helper.dart';
 import 'package:e_plaza_vendor/values/dimen.dart';
 import 'package:e_plaza_vendor/values/size_config.dart';
 import 'package:e_plaza_vendor/values/theme_colors.dart';
 import 'package:e_plaza_vendor/widgets/primary_button.dart';
 import 'package:e_plaza_vendor/widgets/widgets.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../utils/const.dart';
 import '../../widgets/normal_outline_text_field.dart';
-import '../forgot_password/forgot_password_screen.dart';
 import 'controller.dart';
 
-class LoginScreen extends StatefulWidget {
+class ForgotPasswordScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   late Controller _controller;
 
   final cp = 4.0;
 
   @override
   void initState() {
-    _controller = Get.put<Controller>(Controller(), tag: 'LoginWithOtpController');
+    _controller = Get.put<Controller>(Controller(), tag: 'ForgotPasswordController');
     super.initState();
   }
 
@@ -97,9 +92,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'Log In',
+                                'Forgot Password',
                                 style: MyTextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
+                              ),
+                            ),
+                            Helper.spaceVertical(4.h),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Enter your registered email address to get verification code.\n\nWe\'ll ask for password in next step.\n\nIf you don\'t have your email? Please contact to the E-Plaza Support',
+                                style: MyTextStyle(fontSize: fontSizeMedium, color: Colors.black),
                               ),
                             ),
                             Helper.spaceVertical(4.h),
@@ -109,76 +112,18 @@ class _LoginScreenState extends State<LoginScreen> {
                               inputType: TextInputType.emailAddress,
                               validator: Helper.emptyValidator,
                             ),
-                            Helper.spaceVertical(2.h),
-                            Stack(
-                              children: [
-                                Obx(
-                                  () => NormalOutlineTextField(
-                                    label: 'Password',
-                                    controller: _controller.passwordController,
-                                    obSecure: _controller.obSecure.value,
-                                    validator: Helper.passwordValidator,
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      _controller.obSecure.value = !_controller.obSecure.value;
-                                    },
-                                    style: TextButton.styleFrom(shape: CircleBorder()),
-                                    child: Obx(
-                                      () => Icon(
-                                        _controller.obSecure.isTrue
-                                            ? CupertinoIcons.eye_fill
-                                            : CupertinoIcons.eye_slash_fill,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
                             Helper.spaceVertical(4.h),
                             PrimaryButton(
                               // width: 80.w,
                               height: 7.h,
                               borderRadius: 3.5.h,
-                              onPressed: _controller.login,
-                              child: 'LOGIN',
+                              onPressed: _controller.proceed,
+                              child: 'Verify',
                             ),
-                            Helper.spaceVertical(2.h),
-                            RichText(
-                              text: TextSpan(
-                                  text: 'Forgot Password?',
-                                  style: MyTextStyle(
-                                      fontWeight: FontWeight.w500, fontSize: fontSizeMedium),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      Get.to(() => ForgotPasswordScreen());
-                                    }),
-                            ),
-                            Helper.spaceVertical(2.h),
-                            const Text(
-                              'Or sign in with',
-                              style: MyTextStyle(fontWeight: FontWeight.w300),
-                            ),
-                            Helper.spaceVertical(16),
-                            SocialButtons(
-                              facebook: () {},
-                              google: () {},
-                              instagram: () {},
-                            ),
-                            Helper.spaceVertical(16),
+                            Helper.spaceVertical(4.h),
                           ],
                         ),
                       ),
-                    ),
-                    Helper.spaceVertical(4.h),
-                    PrimaryButton.outline(
-                      onPressed: () => Get.to(() => SignUpScreen()),
-                      child: 'SIGNUP',
-                      width: (100 - ((cp * 4) + 2)).w,
-                      height: 7.h,
                     ),
                   ],
                 ),
