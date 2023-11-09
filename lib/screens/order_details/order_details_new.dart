@@ -1,6 +1,7 @@
 import 'package:e_plaza_vendor/dialogs/popup_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/const.dart';
 import '../../utils/helper.dart';
@@ -53,7 +54,9 @@ class OrderDetailsScreen extends StatelessWidget {
         Helper.spaceHorizontal(12),
         Expanded(
           child: OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+              Helper.openUrl('https://www.africau.edu/images/default/sample.pdf', launchMode: LaunchMode.externalApplication);
+            },
             style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 backgroundColor: ThemeColors.offWhite,
@@ -154,7 +157,7 @@ class OrderDetailsScreen extends StatelessWidget {
                           softWrap: true,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        Helper.spaceHorizontal(6),
+                        Helper.spaceHorizontal(8),
                         Text(
                           Const.currencySymbol + '400.00',
                           style: const MyTextStyle(
@@ -243,7 +246,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     Text(
                       'Member since April 2023',
                       style: const MyTextStyle(
-                        fontSize: fontSizeMedium,
+                        fontSize: fontSizeSmall,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -257,7 +260,9 @@ class OrderDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              smallIconImage('assets/icons/call.png', () {},
+              smallIconImage('assets/icons/call.png', () {
+                Helper.openUrl("tel:1234567890", launchMode: LaunchMode.externalNonBrowserApplication);
+              },
                   color: ThemeColors.colorPrimary, iconColor: ThemeColors.colorPrimary),
               Helper.spaceHorizontal(8),
             ],
@@ -314,7 +319,7 @@ class OrderDetailsScreen extends StatelessWidget {
                     Text(
                       'Member since April 2023',
                       style: const MyTextStyle(
-                        fontSize: fontSizeMedium,
+                        fontSize: fontSizeSmall,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -328,7 +333,9 @@ class OrderDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              smallIconImage('assets/icons/call.png', () {},
+              smallIconImage('assets/icons/call.png', () {
+                Helper.openUrl("tel:1234567890", launchMode: LaunchMode.externalNonBrowserApplication);
+              },
                   color: ThemeColors.colorPrimary, iconColor: ThemeColors.colorPrimary),
               Helper.spaceHorizontal(8),
             ],

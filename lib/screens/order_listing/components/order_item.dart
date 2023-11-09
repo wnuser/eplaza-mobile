@@ -100,7 +100,7 @@ class OrderItem extends StatelessWidget {
                           title: 'Action',
                           list: ['Accept', 'Cancel'],
                           onSelected: (s) {
-                            Toasty.info(s.toString());
+                            Toasty.info(s);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
