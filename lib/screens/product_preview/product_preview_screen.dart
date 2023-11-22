@@ -22,8 +22,8 @@ class ProductPreviewScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MyAppBar2(title: 'Search product...'),
-              Obx(() => _controller.storeProducts.isNotEmpty
-                  ? Expanded(child: StoreProducts(_controller.storeProducts))
+              Obx(() => _controller.storeProductsDynamic.isNotEmpty
+                  ? Expanded(child: StoreProducts(_controller.storeProductsDynamic))
                   : empty()),
             ]),
       ),

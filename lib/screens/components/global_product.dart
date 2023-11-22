@@ -1,3 +1,4 @@
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:e_plaza/screens/cart_list/cart_controller.dart';
 import 'package:e_plaza/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,8 @@ import '../../utils/const.dart';
 import '../../widgets/my_network_image.dart';
 
 class GlobalProductItem extends StatelessWidget {
-  final StoreProduct product;
-  final void Function(StoreProduct product) onClick;
+  final Data product;
+  final void Function(Data product) onClick;
   final double? width;
   final bool saved;
 
@@ -18,6 +19,7 @@ class GlobalProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(product.description);
     return Container(
       width: width,
       margin: EdgeInsets.symmetric(horizontal: 2),
@@ -57,47 +59,47 @@ class GlobalProductItem extends StatelessWidget {
                             topRight: Radius.circular(10), topLeft: Radius.circular(10)),
                         child: MyNetworkImage(
                           path: '',
-                          imageName: product.image.nullSafe,
-                          title: product.title,
+                          imageName: product.image1.nullSafe,
+                          title: product.name,
                           fit: BoxFit.fitWidth,
                           errorWidget: Container(
                             padding: const EdgeInsets.all(40),
-                            child: assetImage('assets/icons/no_image.png'),
+                            child: assetImage('assets/images/noImageplaceholder.png'),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      margin: EdgeInsets.all(8),
-                      padding: EdgeInsets.only(left: 6, right: 8, top: 4, bottom: 4),
-                      decoration: BoxDecoration(
-                        color: ThemeColors.colorPrimary,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            color: Colors.white,
-                            size: 12,
-                          ),
-                          Helper.spaceHorizontal(4),
-                          Text(
-                            '4.5',
-                            style: MyTextStyle(
-                              color: Colors.white,
-                              fontSize: fontSizeMini,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topLeft,
+                  //   child: Container(
+                  //     margin: EdgeInsets.all(8),
+                  //     padding: EdgeInsets.only(left: 6, right: 8, top: 4, bottom: 4),
+                  //     decoration: BoxDecoration(
+                  //       color: ThemeColors.colorPrimary,
+                  //       borderRadius: BorderRadius.circular(3),
+                  //     ),
+                  //     child: Row(
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       children: [
+                  //         Icon(
+                  //           Icons.star,
+                  //           color: Colors.white,
+                  //           size: 12,
+                  //         ),
+                  //         Helper.spaceHorizontal(4),
+                  //         Text(
+                  //           '4.5',
+                  //           style: MyTextStyle(
+                  //             color: Colors.white,
+                  //             fontSize: fontSizeMini,
+                  //             fontWeight: FontWeight.w600,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
@@ -118,7 +120,7 @@ class GlobalProductItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Text(
-                product.title,
+                product.name!,
                 style: const MyTextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
                 maxLines: 1,
                 textAlign: TextAlign.center,
@@ -130,7 +132,7 @@ class GlobalProductItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  Const.currencySymbol + product.price,
+                  Const.currencySymbol + product.price.toString(),
                   style: const MyTextStyle(
                       color: Colors.red,
                       fontSize: fontSizeSmall,
@@ -143,7 +145,7 @@ class GlobalProductItem extends StatelessWidget {
                 ),
                 Helper.spaceHorizontal(4),
                 Text(
-                  Const.currencySymbol + product.finalPrice,
+                  Const.currencySymbol + product.offerPrice.toString(),
                   style: const MyTextStyle(
                     color: Colors.black,
                     fontSize: fontSizeLarge,
@@ -161,7 +163,7 @@ class GlobalProductItem extends StatelessWidget {
                     color: Colors.green.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Text('20% OFF',
+                  child: Text('${product.offerPercentage}% OFF',
                       style: const MyTextStyle(
                           fontSize: fontSizeMini, fontWeight: FontWeight.w600, color: Colors.green),
                       maxLines: 3,
@@ -189,19 +191,19 @@ class GlobalProductItem extends StatelessWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         side: BorderSide(color: ThemeColors.colorPrimary, width: 0.7));
 
-    return Obx(() => CartController.cartItems.containsKey(product.title)
+    return Obx(() => CartController.cartItems.containsKey(product.name)
         ? Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               OutlinedButton(
                   onPressed: () {
-                    CartController.remove(product.title);
+                    CartController.remove(product.name!);
                   },
                   style: style,
                   child: Icon(Icons.remove, color: ThemeColors.colorPrimary, size: 16)),
               Helper.spaceHorizontal(12),
               Text(
-                CartController.cartItems[product.title]!.quantity.toString(),
+                CartController.cartItems[product.name]!.quantity.toString(),
                 style: MyTextStyle(
                   color: ThemeColors.colorPrimary,
                   fontSize: fontSizeLarge,
@@ -211,7 +213,7 @@ class GlobalProductItem extends StatelessWidget {
               Helper.spaceHorizontal(12),
               OutlinedButton(
                   onPressed: () {
-                    CartController.add(product);
+                    // CartController.add(product);
                   },
                   style: style,
                   child: Icon(Icons.add, color: ThemeColors.colorPrimary, size: 16)),
@@ -219,7 +221,7 @@ class GlobalProductItem extends StatelessWidget {
           )
         : OutlinedButton(
             onPressed: () {
-              CartController.add(product);
+              // CartController.add(product);
             },
             style: OutlinedButton.styleFrom(
                 backgroundColor: Colors.grey.shade100,

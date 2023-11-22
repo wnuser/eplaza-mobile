@@ -5,13 +5,22 @@ class CategoryShopModel {
     CategoryShopModel({this.data, this.success});
 
     CategoryShopModel.fromJson(Map<String, dynamic> json) {
-        if (json['data'] != null) {
+        
+        if (json['data'] != null && json['data'].length>0) {
             data = <Data>[];
+
+            // data!.add(Data.fromJson(json['data']));
+            
             json['data'].forEach((v) {
-                data!.add(new Data.fromJson(v));
+                
+                data!.add(Data.fromJson(v));
+
+                // print(data![0].id.toString());
             });
         }
+        
         success = json['success'];
+        print(json['data']);
     }
 
     Map<String, dynamic> toJson() {
@@ -61,6 +70,7 @@ class Data {
             this.updatedAt});
 
     Data.fromJson(Map<String, dynamic> json) {
+      // print('final jsonvvvvvvvvvvvv');
         id = json['id'];
         vendorId = json['vendor_id'];
         shopName = json['shop_name'];

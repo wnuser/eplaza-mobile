@@ -1,3 +1,5 @@
+import 'package:e_plaza/modals/home_main_category_model.dart' as HMCM;
+import 'package:e_plaza/modals/home_slider_model.dart';
 import 'package:e_plaza/screens/stores/stores_screen.dart';
 import 'package:e_plaza/utils/helper.dart';
 import 'package:e_plaza/values/dimen.dart';
@@ -14,7 +16,7 @@ class GmartStoresCategoriesGridWidget extends StatelessWidget {
   GmartStoresCategoriesGridWidget(this.gmart_categories, {Key? key}) : super(key: key);
 
   // final List<StoreCategory> categories;
-  final List<GmartCatModel> gmart_categories;
+  final List<HMCM.HomeMainCategoriesModel> gmart_categories;
 
 
   @override
@@ -36,7 +38,7 @@ class GmartStoresCategoriesGridWidget extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             children: gmart_categories
-                .map((gmart_categories) => _item(gmart_categories.data))
+                .map((gmart_categories) => _item(gmart_categories.data?.cast<Data>()))
                 .toList()
         );
       }  });
@@ -46,10 +48,14 @@ class GmartStoresCategoriesGridWidget extends StatelessWidget {
     if (data != null && data.isNotEmpty) {
       // Create a list of widgets for each item in the "Data" array
       List<Widget> dataWidgets = data.map((item) {
+        
         return TextButton(
           onPressed: () {
-            // Get.to(() => StoresScreen(item);
-            print("Item clicked: ${item.name}");
+           
+            Get.to(() => StoresScreen(item as HMCM.Data));
+
+            print(item.id);
+            print("Item clicked: ${item.title}");
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 6),
@@ -70,14 +76,14 @@ class GmartStoresCategoriesGridWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   child: MyNetworkImage(
                     path: NetworkConstantsUtil.cat_img_path,
-                    imageName: item.mainBanner!,
+                    imageName: item.bannerImage!,
                     fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
               Helper.spaceVertical(4),
               Text(
-                item.name ?? '',
+                item.title ?? '',
                 style: MyTextStyle(
                     fontSize: fontSizeSmall, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,

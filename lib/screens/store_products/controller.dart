@@ -1,3 +1,5 @@
+import 'package:e_plaza/apiHandler/api_controller.dart';
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:e_plaza/modals/store_product.dart';
 import 'package:e_plaza/utils/const.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +13,10 @@ class Controller extends GetxController {
   RxString status = Status.PROGRESS.obs;
 
   final RxList<StoreProduct> storeProducts = <StoreProduct>[].obs;
+  final RxList<SpecificStoreProducts> storeProductsDynamic = <SpecificStoreProducts>[].obs;
   final RxList<StoreProduct> storeProductsMain = <StoreProduct>[].obs;
 
-  Rx<StoreCategory> selectedCategory = StoreCategory('Category', '').obs;
+  Rx<StoreCategory> selectedCategory = StoreCategory('Category', '','').obs;
   TextEditingController categoryController = TextEditingController();
 
   Controller();
@@ -121,22 +124,29 @@ class Controller extends GetxController {
   }
 
   RxList<StoreCategory> storeCategories = <StoreCategory>[
-    StoreCategory('Daily Need',
+    StoreCategory('','Daily Need',
         'http://www.eplaza.in/wp-content/uploads/2022/12/c94df51e52985b4e79b74a63f9780441-1-150x150.jpg'),
-    StoreCategory('Kirana',
+    StoreCategory('','Kirana',
         'http://www.eplaza.in/wp-content/uploads/2022/07/photo-1604719312566-8912e9227c6a-300x300.jpg'),
-    StoreCategory('Fast Food', 'http://www.eplaza.in/wp-content/uploads/2022/12/ff-2-300x300.jpg'),
-    StoreCategory('Fashion',
+    StoreCategory('','Fast Food', 'http://www.eplaza.in/wp-content/uploads/2022/12/ff-2-300x300.jpg'),
+    StoreCategory('','Fashion',
         'http://www.eplaza.in/wp-content/uploads/2022/12/a4016739adede59c5d67cb39b2ecbbf7-300x300.jpg'),
-    StoreCategory('Medical',
+    StoreCategory('','Medical',
         'http://www.eplaza.in/wp-content/uploads/2022/12/af093a28f0e430d4bb57c7e75d974bc5-150x150.jpg'),
-    StoreCategory('Furniture',
+    StoreCategory('','Furniture',
         'http://www.eplaza.in/wp-content/uploads/2022/12/24d2f207d099930d69d5379b884c40cc-150x150.jpg'),
-    StoreCategory('Mobile', 'http://www.eplaza.in/wp-content/uploads/2022/06/COMPUTER.jpg'),
-    StoreCategory('Gift Store',
+    StoreCategory('','Mobile', 'http://www.eplaza.in/wp-content/uploads/2022/06/COMPUTER.jpg'),
+    StoreCategory('','Gift Store',
         'http://www.eplaza.in/wp-content/uploads/2022/07/Waste-management-in-beauty-can-be-improved-if-brands-add-value-and-step-up-communication-says-Certified-Sustainable-300x300.jpg'),
   ].obs;
 
+
+  getAllProductsOfSpecificStore(store_id)async{
+    await ApiController().getSpecificStoreProducts(store_id).then((stores) {
+      storeProductsDynamic.add(stores);
+      print(storeProductsDynamic[0].data!.length);
+    });
+  }
   void filterList(String keyword) {
     storeProducts.clear();
 

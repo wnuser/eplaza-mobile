@@ -1,3 +1,4 @@
+import 'package:e_plaza/apiHandler/api_controller.dart';
 import 'package:e_plaza/modals/ads_banner_model.dart';
 import 'package:e_plaza/modals/home_main_category_model.dart';
 import 'package:e_plaza/screens/home/components/categories.dart';
@@ -75,7 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   // padding: EdgeInsets.only(bottom: 2),
                   children: [
-                    SearchAndLocWid(location: 'Dehradun'),
+                    InkWell(
+                      child: SearchAndLocWid(location: 'Dehradun')),
                     CategoriesWidget(categories:_controller.home_main_categories_model),
                     MainSlider(_controller.home_slider),
                     Tile('VISIT STORES'),

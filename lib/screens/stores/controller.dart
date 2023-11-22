@@ -22,6 +22,7 @@ class Controller extends GetxController {
   final RxList<SubCategoryModel> _subcatmodel = <SubCategoryModel>[].obs;
 
   final RxList<CategoryShopModel> catshopmodel = <CategoryShopModel>[].obs;
+  
 
 
   final RxString selectedCategory = 'Category'.obs;
@@ -109,24 +110,48 @@ class Controller extends GetxController {
   }
 
 
-  void getCategoryShops(BuildContext context) {
+  void getCategoryShops(BuildContext context,int cat_id) {
     print("getCategeryShopsRequest");
     AppUtil.checkInternet().then((value) {
       if (value) {
+        print(value);
         EasyLoading.show(status: LocalizationString.loading);
-        ApiController().getCategoryShops(2).then((response) async {
+        ApiController().getCategoryShops(cat_id).then((response) async {
+          print('response is : ${response.success}');
+          
           if (response.success!) {
             EasyLoading.dismiss();
 
-            showSuccessMessage("getCategeryShopsRequest_success",context);
+            print(response.success);
+
+            // showSuccessMessage("getCategeryShopsRequest_success",context);
 
             print("getCategeryShopsRequest_success  "+"success");
 
-
             for (var data in response.data!) {
-
+              print('data is ');
+              print(data.id);
               CategoryShopModel categoryShopModel = CategoryShopModel.fromJson({
-                "data": [data],  // Wrap the data in a map as expected by CatProductModel
+                "data": [
+                  {
+                    'id': data.id, 
+                    'vendor_id': data.vendorId, 
+                    'shop_name': data.shopName, 
+                    'shop_description': data.shopDescription, 
+                    'city': data.city, 
+                    'address': data.address, 
+                    'image_1': data.image1, 
+                    'image_2': data.image2, 
+                    'aadhar_card_number': data.aadharCardNumber, 
+                    'aadhar_image': data.aadharImage, 
+                    'business_type': data.businessType, 
+                    'turn_over': data.turnOver, 
+                    'is_grahudhyog': data.isGrahudhyog, 
+                    'is_popular': data.isPopular, 
+                    'createdAt': data.createdAt, 
+                    'updatedAt': data.updatedAt
+                    }
+                ],  // Wrap the data in a map as expected by CatProductModel
                 "success": true  // Assuming success is always true in this context
               });
               catshopmodel.add(categoryShopModel);
@@ -136,9 +161,10 @@ class Controller extends GetxController {
 
 
           } else {
+
             EasyLoading.dismiss();
 
-            showErrorMessage(response.success! as String,context);
+            showErrorMessage(response.success!.toString(),context);
 
             print("checkPhoneRequest_error "+response.success.toString());
 
@@ -186,6 +212,8 @@ class Controller extends GetxController {
       }
     });
   }
+
+  
 
 
   showSuccessMessage(String message, BuildContext context) {

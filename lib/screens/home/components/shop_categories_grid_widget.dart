@@ -12,10 +12,11 @@ import '../../../widgets/my_network_image.dart';
 import '../../../widgets/widgets.dart';
 
 class StoresCategoriesGridWidget extends StatelessWidget {
+  final List<HomeMainCategoriesModel> categories;
   StoresCategoriesGridWidget(this.categories, {Key? key}) : super(key: key);
 
   // final List<StoreCategory> categories;
-  final List<HomeMainCategoriesModel> categories;
+  
 
 
   @override
@@ -49,7 +50,7 @@ class StoresCategoriesGridWidget extends StatelessWidget {
       List<Widget> dataWidgets = data.map((item) {
         return TextButton(
           onPressed: () {
-            Get.to(() => StoresScreen(2));
+            Get.to(() => StoresScreen(item));
             print("Item clicked: ${item.name}");
           },
           style: TextButton.styleFrom(
@@ -80,7 +81,7 @@ class StoresCategoriesGridWidget extends StatelessWidget {
               Text(
                 item.name ?? '',
                 style: MyTextStyle(
-                    fontSize: fontSizeSmall, fontWeight: FontWeight.w600),
+                    fontSize: fontSizeSmall-2, fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
                 maxLines: 1,
               ),

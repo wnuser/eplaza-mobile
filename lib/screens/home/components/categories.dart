@@ -1,9 +1,12 @@
+import 'package:e_plaza/screens/stores/stores_screen.dart';
 import 'package:e_plaza/utils/helper.dart';
 import 'package:e_plaza/values/dimen.dart';
 import 'package:e_plaza/values/size_config.dart';
 import 'package:e_plaza/widgets/my_network_image.dart';
 import 'package:e_plaza/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../../apiHandler/network_constant.dart';
@@ -50,6 +53,9 @@ class CategoriesWidget extends StatelessWidget {
             children: categories.map((category) {
               if (category.data != null && category.data!.isNotEmpty) {
                 // If the data list is not empty, use the mainBanner from the first Data object
+
+                print('kkkkkkk');
+                print(category.data![0].id);
                 return _item(category.data![0]);
               } else {
                 // If the data list is empty, use default data
@@ -73,40 +79,47 @@ class CategoriesWidget extends StatelessWidget {
     final defaultTitle = 'Not Availbale';
     final defaultImage = 'https://rukminim1.flixcart.com/flap/128/128/image/29327f40e9c4d26b.png?q=100';
 
-    return Container(
-      height: _h,
-      margin: EdgeInsets.symmetric(horizontal: 6),
-      padding: EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: colors[colorIndex],
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-              color: colors[colorIndex].withOpacity(0.4),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: Offset(0, 2))
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            (category.name ?? defaultTitle).replaceAll(' ', '\n'),
-            style: MyTextStyle(fontSize: fontSizeSmall, fontWeight: FontWeight.w500),
-          ),
-          Helper.spaceHorizontal(4),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(_h / 4),
-            child: MyNetworkImage(
-              path: NetworkConstantsUtil.cat_img_path,
-              imageName: category.mainBanner!,
-              height: _h / 1.7,
-              fit: BoxFit.fitHeight,
+    return InkWell(
+      onTap: (){
+        print(category.id);
+        Get.to(() => StoresScreen(category));
+        print("Item clicked: ${category.name}");
+      },
+      child: Container(
+        height: _h,
+        margin: EdgeInsets.symmetric(horizontal: 6),
+        padding: EdgeInsets.symmetric(horizontal: 12),
+        decoration: BoxDecoration(
+          color: colors[colorIndex],
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+                color: colors[colorIndex].withOpacity(0.4),
+                spreadRadius: 2,
+                blurRadius: 4,
+                offset: Offset(0, 2))
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              (category.name ?? defaultTitle).replaceAll(' ', '\n'),
+              style: MyTextStyle(fontSize: fontSizeSmall, fontWeight: FontWeight.w500),
             ),
-          ),
-        ],
+            Helper.spaceHorizontal(4),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(_h / 4),
+              child: MyNetworkImage(
+                path: NetworkConstantsUtil.cat_img_path,
+                imageName: category.mainBanner!,
+                height: _h / 1.7,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

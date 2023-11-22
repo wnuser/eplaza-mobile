@@ -1,4 +1,5 @@
 import 'package:e_plaza/modals/cart_item.dart';
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:get/get.dart';
 
 import '../../modals/store_product.dart';
@@ -8,14 +9,15 @@ class CartController extends GetxController {
   RxString status = Status.NORMAL.obs;
 
   static RxMap<String, CartItem> cartItems = <String, CartItem>{}.obs;
-  final RxList<StoreProduct> storeProducts = <StoreProduct>[].obs;
+  final RxList<StoreProduct> storeProduct = <StoreProduct>[].obs;
+  final RxList<SpecificStoreProducts> storeProductDynamic = <SpecificStoreProducts>[].obs;
   final RxList<StoreProduct> similarProducts = <StoreProduct>[].obs;
 
-  static void add(StoreProduct product) {
-    if (CartController.cartItems.containsKey(product.title)) {
-      CartController.cartItems[product.title]!.quantity++;
+  static void add(Data product) {
+    if (CartController.cartItems.containsKey(product.name)) {
+      CartController.cartItems[product.name]!.quantity++;
     } else {
-      CartController.cartItems.putIfAbsent(product.title, () => CartItem(product, 1));
+      CartController.cartItems.putIfAbsent(product.name!, () => CartItem(product, 1));
     }
     CartController.cartItems.refresh();
   }
@@ -37,7 +39,7 @@ class CartController extends GetxController {
   void onInit() {
     super.onInit();
 
-    storeProducts.value = [
+    storeProduct.value = [
       StoreProduct("Nescafe Classic Instant Coffee", "640", "524",
           "https://rukminim1.flixcart.com/image/280/280/kzzw5u80/coffee/s/b/x/-original-imagbwf3wvhzfh5z.jpeg?q=70"),
       StoreProduct("CONTINENTAL Xtra Instant Coffee", "150", "105",

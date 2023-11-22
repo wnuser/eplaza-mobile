@@ -1,3 +1,5 @@
+import 'package:e_plaza/modals/specific_store_products_model.dart' as SSPM;
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:e_plaza/utils/helper.dart';
 import 'package:flutter/material.dart';
 
@@ -6,8 +8,8 @@ import '../../utils/const.dart';
 import '../../widgets/my_network_image.dart';
 
 class PreviewProductItem extends StatelessWidget {
-  final StoreProduct product;
-  final void Function(StoreProduct product) onClick;
+  final SSPM.Data product;
+  final void Function(Data product) onClick;
   final double? width;
   final bool saved;
 
@@ -55,8 +57,8 @@ class PreviewProductItem extends StatelessWidget {
                             topRight: Radius.circular(10), topLeft: Radius.circular(10)),
                         child: MyNetworkImage(
                           path: '',
-                          imageName: product.image.nullSafe,
-                          title: product.title,
+                          imageName: product.image1.nullSafe,
+                          title: product.name,
                           fit: BoxFit.fitWidth,
                           errorWidget: Container(
                             padding: const EdgeInsets.all(40),
@@ -111,7 +113,7 @@ class PreviewProductItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
               child: Text(
-                product.title,
+                product.name!,
                 style: const MyTextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.w600,
@@ -126,7 +128,7 @@ class PreviewProductItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  Const.currencySymbol + product.price,
+                  Const.currencySymbol + product.price.toString(),
                   style: const MyTextStyle(
                       color: Colors.red,
                       fontSize: fontSizeSmall,
@@ -139,7 +141,7 @@ class PreviewProductItem extends StatelessWidget {
                 ),
                 Helper.spaceHorizontal(4),
                 Text(
-                  Const.currencySymbol + product.finalPrice,
+                  Const.currencySymbol + product.offerPrice.toString(),
                   style: const MyTextStyle(
                     color: Colors.black,
                     fontSize: fontSizeLarge,

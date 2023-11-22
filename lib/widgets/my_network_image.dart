@@ -76,8 +76,8 @@ class MyNetworkImage extends StatelessWidget {
                 );
           },
           placeholder: (context, string) {
-            width = width ?? 80;
-            height = height ?? 80;
+            width = width ?? 70;
+            height = height ?? 70;
             double indicatorSize = min(width!, height!);
             return enableLoader
                 ? Center(

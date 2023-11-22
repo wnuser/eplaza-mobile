@@ -84,7 +84,7 @@ class StoreItem extends StatelessWidget {
                             color: Colors.grey.shade700, size: fontSizeSmall),
                         Flexible(
                           child: Text(
-                            'Raipur Dehradun',
+                            _categoryStoreModel.data![0].city.nullStr,
                             style: MyTextStyle(
                                 color: Colors.grey.shade700,
                                 fontSize: fontSizeSmall,
@@ -128,7 +128,9 @@ class StoreItem extends StatelessWidget {
           Helper.spaceVertical(4),
           TextButton(
             onPressed: () {
-              // Get.to(() => SingleStoreScreen(storeCategory));
+              print('shop id : ${_categoryStoreModel.data![0].id}');
+              Get.to(() => SingleStoreScreen(_categoryStoreModel));
+              print(_categoryStoreModel.data![0]);
             },
             style: TextButton.styleFrom(
                 backgroundColor: ThemeColors.colorPrimary,

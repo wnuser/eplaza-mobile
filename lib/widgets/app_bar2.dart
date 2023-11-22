@@ -1,10 +1,18 @@
+import 'package:e_plaza/screens/addess_form_screen/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../values/theme_colors.dart';
 
 class MyAppBar2 extends StatelessWidget {
+
+  // final void Function() search;
   final String title;
+  
   MyAppBar2({this.title = 'Search your favorite shop...', Key? key}) : super(key: key);
+
+  // final Controller _controller = Get.put(Controller(), tag: 'SingleStoreScreenController');
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +38,9 @@ class MyAppBar2 extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             style: TextButton.styleFrom(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
               backgroundColor: ThemeColors.colorPrimary,

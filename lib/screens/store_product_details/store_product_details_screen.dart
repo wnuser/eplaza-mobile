@@ -1,4 +1,5 @@
 import 'package:e_plaza/modals/slide.dart';
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:e_plaza/screens/cart_list/cart_controller.dart';
 import 'package:e_plaza/screens/cart_list/cart_list_screen.dart';
 import 'package:e_plaza/screens/store_product_details/slider.dart';
@@ -20,12 +21,24 @@ import '../../widgets/widgets.dart';
 import '../components/global_product.dart';
 import 'controller.dart';
 
-class StoreProductDetailsScreen extends StatelessWidget {
-  final StoreProduct product;
+class StoreProductDetailsScreen extends StatefulWidget {
+  final int product_id;
 
-  StoreProductDetailsScreen({required this.product, Key? key}) : super(key: key);
+  StoreProductDetailsScreen({required this.product_id, Key? key}) : super(key: key);
 
+  @override
+  State<StoreProductDetailsScreen> createState() => _StoreProductDetailsScreenState();
+}
+
+class _StoreProductDetailsScreenState extends State<StoreProductDetailsScreen> {
   final Controller _controller = Get.put(Controller(), tag: 'StoreProductDetailsScreenController');
+
+  @override
+  void initState() {
+    print(widget.product_id);
+    _controller.getSpecificPRoductDetails(widget.product_id);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,188 +55,214 @@ class StoreProductDetailsScreen extends StatelessWidget {
                 //     ? ProductImageSlider(
                 //         _controller.slides.map((element) => Slide('', element)).toList())
                 //     : empty()),
-                SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Container(
-                    width: 100.w,
-                    // height: 70.h,
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      // borderRadius: BorderRadius.vertical(top: Radius.circular(8.w)),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'MRP',
-                              style: MyTextStyle(
-                                color: Colors.black54,
-                                fontSize: fontSizeExtraLarge,
-                                fontWeight: FontWeight.w600,
+
+                Obx(() => _controller.specificProductDetails.isEmpty 
+                ? empty()
+                : _controller.specificProductDetails[0].data == null  
+                ? empty()
+                : SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: Container(
+                      width: 100.w,
+                      // height: 70.h,
+                      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        // borderRadius: BorderRadius.vertical(top: Radius.circular(8.w)),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+                                child: MyNetworkImage(
+                                  path: '',
+                                  imageName: _controller.specificProductDetails[0].data![0].image1.toString(),
+                                  title: _controller.specificProductDetails[0].data![0].name.toString(),
+                                  fit: BoxFit.fitWidth,
+                                  errorWidget: Container(
+                                    padding: const EdgeInsets.all(20),
+                                    child: assetImage('assets/images/noImageplaceholder.png'),
+                                  ),
+                                ),
                               ),
                             ),
-                            Helper.spaceHorizontal(8),
-                            Text(
-                              product.price,
-                              style: MyTextStyle(
-                                color: Colors.red,
-                                fontSize: fontSizeExtraLarge,
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                            Helper.spaceHorizontal(5),
-                            Text(
-                              Const.currencySymbol + product.finalPrice,
-                              style: MyTextStyle(
-                                color: Colors.black,
-                                fontSize: fontSizeExtraLarge,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Spacer(),
-                            smallIcon(Icons.favorite, () {}),
-                          ],
-                        ),
-                        Helper.spaceVertical(16),
-                        Text(
-                          product.title,
-                          style: MyTextStyle(
-                            color: Colors.black,
-                            fontSize: fontSizeLarge,
-                            fontWeight: FontWeight.w600,
                           ),
-                        ),
-                        Helper.spaceVertical(16),
-                        Text(
-                          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s.',
-                          style: MyTextStyle(
-                            color: Colors.grey.shade600,
-                          ),
-                        ),
-                        Helper.spaceVertical(8),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            StarDisplay(
-                              starCount: 5,
-                              rating: Helper.parseDouble(4),
-                              size: 16.0,
-                              color: ThemeColors.colorPrimary,
-                            ),
-                            Helper.spaceHorizontal(4),
-                            Text(
-                              '5.0',
-                              style: MyTextStyle(
-                                  color: Colors.black,
-                                  fontSize: fontSizeSmall,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Helper.spaceHorizontal(8),
-                            Text(
-                              '(158 Reviews) 12 Orders',
-                              style: MyTextStyle(
-                                  color: Colors.black,
-                                  fontSize: fontSizeSmall,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        Divider(color: Colors.grey.shade300, height: 20, thickness: 0.6),
-                        Text(
-                          'Highlights',
-                          style: MyTextStyle(
-                            color: Colors.black,
-                            fontSize: fontSizeLarge,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Helper.spaceVertical(8),
-                        ...[
-                          'Type - Fresh',
-                          'Enumerator - Test',
-                          'Quantity - Fine',
-                          'Stocks - Unlimited',
-                        ].map((e) => _feature(e)).toList(),
-                        Helper.spaceVertical(10),
-                        _storeCard(),
-                        _purchaseDetailsTile(),
-                        _shippingTile(),
-                        Helper.spaceVertical(4),
-                        _paymentTile(),
-                        Helper.spaceVertical(4),
-                        _returnTile(),
-                        Helper.spaceVertical(6),
-                        Text('Similar Products',
-                            style:
-                                MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
-                        _products(_controller.storeProducts),
-                        Divider(thickness: 0.7, height: 0),
-                        Helper.spaceVertical(8),
-                        Text('Hot products from this store',
-                            style:
-                                MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
-                        _products(_controller.storeProducts.reversed.toList()),
-                        Helper.spaceVertical(8),
-                        Text('Grammart mela product',
-                            style:
-                                MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
-                        _products(_controller.storeProducts),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: Divider(color: Colors.grey.shade400, height: 0),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
+                          Row(
                             mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text('0 Ratings/ 0 Reviews',
-                                  style: MyTextStyle(
-                                      fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
-                              Helper.spaceHorizontal(20),
+                              Text(
+                                'MRP',
+                                style: MyTextStyle(
+                                  color: Colors.black54,
+                                  fontSize: fontSizeExtraLarge,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Helper.spaceHorizontal(8),
+                              Text(
+                                _controller.specificProductDetails[0].data![0].price.toString(),
+                                style: MyTextStyle(
+                                  color: Colors.red,
+                                  fontSize: fontSizeExtraLarge,
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
+                              ),
+                              Helper.spaceHorizontal(5),
+                              Text(
+                                Const.currencySymbol + _controller.specificProductDetails[0].data![0].offerPrice.toString(),
+                                style: MyTextStyle(
+                                  color: Colors.black,
+                                  fontSize: fontSizeExtraLarge,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Spacer(),
+                              smallIcon(Icons.favorite, () {}),
                             ],
                           ),
-                        ),
-                        Helper.spaceVertical(2),
-                        PercentRatingReviews(
-                          average: 4.0,
-                          rating: 4.0,
-                          stars: [
-                            'Star 5',
-                            'Star 4',
-                            'Star 3',
-                            'Star 2',
-                            'Star 1',
-                          ],
-                          values: [0, 0, 0, 0, 0],
-                          totalRating: 5,
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(12),
-                        //   child: Row(
-                        //     mainAxisSize: MainAxisSize.min,
-                        //     crossAxisAlignment: CrossAxisAlignment.center,
-                        //     children: [
-                        //       Text('Reviews',
-                        //           style: MyTextStyle(
-                        //               fontSize: fontSizeLarge, fontWeight: FontWeight.w600)),
-                        //       Helper.spaceHorizontal(20),
-                        //     ],
-                        //   ),
-                        // ),
-                        Helper.spaceVertical(12),
-                        _reviews(),
-                      ],
+                          Helper.spaceVertical(16),
+                          Text(
+                            _controller.specificProductDetails[0].data![0].name.toString(),
+                            style: MyTextStyle(
+                              color: Colors.black,
+                              fontSize: fontSizeLarge,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Helper.spaceVertical(16),
+                          Text(
+                            _controller.specificProductDetails[0].data![0].description.toString(),
+                            style: MyTextStyle(
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                          Helper.spaceVertical(8),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // StarDisplay(
+                              //   starCount: 5,
+                              //   rating: Helper.parseDouble(4),
+                              //   size: 16.0,
+                              //   color: ThemeColors.colorPrimary,
+                              // ),
+                              Helper.spaceHorizontal(4),
+                              // Text(
+                              //   '5.0',
+                              //   style: MyTextStyle(
+                              //       color: Colors.black,
+                              //       fontSize: fontSizeSmall,
+                              //       fontWeight: FontWeight.w600),
+                              // ),
+                              Helper.spaceHorizontal(8),
+                              // Text(
+                              //   '(158 Reviews) 12 Orders',
+                              //   style: MyTextStyle(
+                              //       color: Colors.black,
+                              //       fontSize: fontSizeSmall,
+                              //       fontWeight: FontWeight.w500),
+                              // )
+                            ],
+                          ),
+                          Divider(color: Colors.grey.shade300, height: 20, thickness: 0.6),
+                          Text(
+                            'Highlights',
+                            style: MyTextStyle(
+                              color: Colors.black,
+                              fontSize: fontSizeLarge,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Helper.spaceVertical(8),
+                          ...[
+                            'Type - Fresh',
+                            'Enumerator - Test',
+                            'Quantity - Fine',
+                            'Stocks - Unlimited',
+                          ].map((e) => _feature(e)).toList(),
+                          Helper.spaceVertical(10),
+                          _storeCard(),
+                          _purchaseDetailsTile(),
+                          _shippingTile(),
+                          Helper.spaceVertical(4),
+                          _paymentTile(),
+                          Helper.spaceVertical(4),
+                          _returnTile(),
+                          Helper.spaceVertical(6),
+                          Text('Similar Products',
+                              style:
+                                  MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
+                          _products(_controller.storeProductsDynamic),
+                          Divider(thickness: 0.7, height: 0),
+                          Helper.spaceVertical(8),
+                          Text('Hot products from this store',
+                              style:
+                                  MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
+                          _products(_controller.storeProductsDynamic.reversed.toList()),
+                          Helper.spaceVertical(8),
+                          Text('Grammart mela product',
+                              style:
+                                  MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
+                          _products(_controller.storeProductsDynamic),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            child: Divider(color: Colors.grey.shade400, height: 0),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('0 Ratings/ 0 Reviews',
+                                    style: MyTextStyle(
+                                        fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
+                                Helper.spaceHorizontal(20),
+                              ],
+                            ),
+                          ),
+                          Helper.spaceVertical(2),
+                          PercentRatingReviews(
+                            average: 4.0,
+                            rating: 4.0,
+                            stars: [
+                              'Star 5',
+                              'Star 4',
+                              'Star 3',
+                              'Star 2',
+                              'Star 1',
+                            ],
+                            values: [0, 0, 0, 0, 0],
+                            totalRating: 5,
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(12),
+                          //   child: Row(
+                          //     mainAxisSize: MainAxisSize.min,
+                          //     crossAxisAlignment: CrossAxisAlignment.center,
+                          //     children: [
+                          //       Text('Reviews',
+                          //           style: MyTextStyle(
+                          //               fontSize: fontSizeLarge, fontWeight: FontWeight.w600)),
+                          //       Helper.spaceHorizontal(20),
+                          //     ],
+                          //   ),
+                          // ),
+                          Helper.spaceVertical(12),
+                          _reviews(),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+                
               ],
             ),
           ),
@@ -271,10 +310,10 @@ class StoreProductDetailsScreen extends StatelessWidget {
               child: OutlinedButton(
                 // height: 50,
                 onPressed: () {
-                  if (CartController.cartItems.containsKey(product.title)) {
+                  if (CartController.cartItems.containsKey(_controller.specificProductDetails[0].data![0].name.toString())) {
                     Get.to(() => CartListingScreen());
                   } else {
-                    CartController.add(product);
+                    CartController.add(_controller.specificProductDetails[0].data![0] as Data);
                   }
                 },
                 style: OutlinedButton.styleFrom(
@@ -282,8 +321,12 @@ class StoreProductDetailsScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                     side: BorderSide(color: Colors.grey, width: 1)),
                 child: Obx(
-                  () => Text(
-                      CartController.cartItems.containsKey(product.title)
+                  () => _controller.specificProductDetails.isEmpty ?
+                  empty() :
+                  _controller.specificProductDetails[0].data!.isEmpty ? 
+                  empty() :
+                  Text(
+                      CartController.cartItems.containsKey(_controller.specificProductDetails[0].data![0].name.toString())
                           ? 'Go to cart'
                           : 'Add to cart',
                       style: MyTextStyle(
@@ -481,7 +524,7 @@ class StoreProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _products(List<StoreProduct> products) {
+  Widget _products(List<SpecificStoreProducts> products) {
     return SizedBox(
       height: 200,
       width: 100.w,
@@ -492,9 +535,11 @@ class StoreProductDetailsScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: products.length,
         itemBuilder: (c, i) {
-          return GlobalProductItem(products[i], (p) {
-            Get.to(() => StoreProductDetailsScreen(product: p));
-          }, width: 140);
+          return GlobalProductItem(products[0].data![i],
+           (p) {
+            Get.to(() => StoreProductDetailsScreen(product_id: p.id!));
+          }, 
+          width: 140);
         },
       ),
     );

@@ -1,14 +1,14 @@
 class AdsBannerModel {
-  List<Data>? data;
+  List<AdsData>? data;
   bool? success;
 
   AdsBannerModel({this.data, this.success});
 
   AdsBannerModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <AdsData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new AdsData.fromJson(v));
       });
     }
     success = json['success'];
@@ -24,7 +24,7 @@ class AdsBannerModel {
   }
 }
 
-class Data {
+class AdsData {
   int? id;
   String? bannerTitle;
   String? bannerType;
@@ -36,7 +36,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  AdsData(
       {this.id,
         this.bannerTitle,
         this.bannerType,
@@ -48,7 +48,7 @@ class Data {
         this.createdAt,
         this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  AdsData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     bannerTitle = json['banner_title'];
     bannerType = json['banner_type'];

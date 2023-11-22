@@ -1,7 +1,8 @@
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:e_plaza/modals/store_product.dart';
 
 class CartItem {
-  StoreProduct product;
+  Data product;
   int quantity;
 
   CartItem(this.product, this.quantity);

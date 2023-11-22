@@ -1,4 +1,4 @@
-import 'package:e_plaza/modals/category_shop_model.dart';
+import 'package:e_plaza/modals/category_shop_model.dart' as CSM;
 import 'package:e_plaza/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,9 +15,9 @@ import 'store_item.dart';
 
 class StoresScreen extends StatefulWidget {
 
-  final int cat_id;
+  final Data cat_data;
 
-  StoresScreen(this.cat_id, {Key? key}) : super(key: key);
+  StoresScreen(this.cat_data, {Key? key}) : super(key: key);
 
   @override
   State<StoresScreen> createState() => _StoresScreenState();
@@ -26,7 +26,7 @@ class StoresScreen extends StatefulWidget {
 class _StoresScreenState extends State<StoresScreen> {
   final Controller _controller = Get.put(Controller(), tag: 'StoresScreenController');
 
-  late List<CategoryShopModel> sategory_shops_model;
+  late List<CSM.CategoryShopModel> sategory_shops_model;
 
 
   int _sortIndexGroup = Sort.NEWEST;
@@ -34,7 +34,7 @@ class _StoresScreenState extends State<StoresScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.getCategoryShops(context);
+    _controller.getCategoryShops(context,widget.cat_data.id!);
   }
 
   @override
@@ -49,7 +49,8 @@ class _StoresScreenState extends State<StoresScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(mainAxisSize: MainAxisSize.max, children: [
-          MyAppBar2(),
+          // MyAppBar2(),
+          
           Expanded(
               child: ListView(
             children: [
@@ -114,7 +115,7 @@ class _StoresScreenState extends State<StoresScreen> {
         children: [
           Expanded(
             child: Text(
-              'Daily Needs & Sweets, In Bilaspur',
+              widget.cat_data.description!,
               style: MyTextStyle(
                 fontSize: fontSizeLarge,
                 fontWeight: FontWeight.w600,

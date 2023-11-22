@@ -4,7 +4,11 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class StoreDetailsWidget extends StatelessWidget {
-  StoreDetailsWidget({Key? key}) : super(key: key);
+  final String shopName;
+  final String? shopDescription;
+  final String shopAddress;
+
+  StoreDetailsWidget(this.shopName,this.shopDescription,this.shopAddress,{Key? key}) : super(key: key);
 
   ExpandableController con = ExpandableController(initialExpanded: false);
 
@@ -19,7 +23,7 @@ class StoreDetailsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Kolkata Sweets',
+            shopName,
             style: MyTextStyle(
               fontSize: fontSizeLarge,
               fontWeight: FontWeight.w600,
@@ -40,7 +44,7 @@ class StoreDetailsWidget extends StatelessWidget {
               Helper.spaceHorizontal(2),
               Expanded(
                 child: Text(
-                  'Mopka Main chowck, Jain complex, Mopka, Bilaspur, Chhattisgarh - Bilaspur India - 495001',
+                  shopAddress,
                   style: MyTextStyle(
                     fontSize: fontSizeSmall,
                     fontWeight: FontWeight.w400,
@@ -55,65 +59,65 @@ class StoreDetailsWidget extends StatelessWidget {
           Helper.spaceVertical(8),
           Divider(color: Colors.grey.shade100, height: 0, thickness: 1),
           Helper.spaceVertical(8),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(25),
-                child: MyNetworkImage(
-                  path: '',
-                  imageName: 'https://pbs.twimg.com/media/DeTjnSuW4AMm5Db.jpg',
-                  width: 50,
-                  height: 50,
-                ),
-              ),
-              Helper.spaceHorizontal(12),
-              Expanded(
-                  child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Mr. Tester',
-                    style: MyTextStyle(
-                      fontSize: fontSizeMedium,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    'Job Title : Sales manager',
-                    style: MyTextStyle(fontSize: fontSizeSmall, fontWeight: FontWeight.w400),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.call_outlined, size: 12, color: Colors.black),
-                      Helper.spaceHorizontal(4),
-                      Expanded(
-                        child: Text(
-                          '1234567890',
-                          style: MyTextStyle(
-                            fontSize: fontSizeSmall,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )),
-              Helper.spaceHorizontal(12),
-              assetImage('assets/icons/whatsapp_green.png', width: 40, height: 40),
-            ],
-          ),
+          // Row(
+          //   mainAxisSize: MainAxisSize.max,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     ClipRRect(
+          //       borderRadius: BorderRadius.circular(25),
+          //       child: MyNetworkImage(
+          //         path: '',
+          //         imageName: 'https://pbs.twimg.com/media/DeTjnSuW4AMm5Db.jpg',
+          //         width: 50,
+          //         height: 50,
+          //       ),
+          //     ),
+          //     Helper.spaceHorizontal(12),
+          //     Expanded(
+          //         child: Column(
+          //       mainAxisSize: MainAxisSize.min,
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Text(
+          //           'Mr. Tester',
+          //           style: MyTextStyle(
+          //             fontSize: fontSizeMedium,
+          //             fontWeight: FontWeight.w500,
+          //             color: Colors.black,
+          //           ),
+          //           maxLines: 1,
+          //           overflow: TextOverflow.ellipsis,
+          //         ),
+          //         Text(
+          //           'Job Title : Sales manager',
+          //           style: MyTextStyle(fontSize: fontSizeSmall, fontWeight: FontWeight.w400),
+          //           maxLines: 1,
+          //           overflow: TextOverflow.ellipsis,
+          //         ),
+          //         Row(
+          //           mainAxisSize: MainAxisSize.max,
+          //           crossAxisAlignment: CrossAxisAlignment.center,
+          //           children: [
+          //             Icon(Icons.call_outlined, size: 12, color: Colors.black),
+          //             Helper.spaceHorizontal(4),
+          //             Expanded(
+          //               child: Text(
+          //                 '1234567890',
+          //                 style: MyTextStyle(
+          //                   fontSize: fontSizeSmall,
+          //                   fontWeight: FontWeight.w400,
+          //                   color: Colors.black,
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     )),
+          //     Helper.spaceHorizontal(12),
+          //     assetImage('assets/icons/whatsapp_green.png', width: 40, height: 40),
+          //   ],
+          // ),
           Helper.spaceVertical(8),
           Padding(
             padding: const EdgeInsets.only(left: 60),
@@ -133,7 +137,7 @@ class StoreDetailsWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             expanded: Text(
-              'the global trade association dedicated to enhancing retail environments and experiences, embraces a culture of inclusion where diverse ...',
+              shopDescription != null ? shopDescription! : '' ,
               style: MyTextStyle(
                 fontSize: fontSizeLarge,
                 fontWeight: FontWeight.w300,

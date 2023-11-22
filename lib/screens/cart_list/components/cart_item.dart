@@ -64,7 +64,7 @@ class CartItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        cartItem.product.title.nullStr,
+                        cartItem.product.name.nullStr,
                         style: MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.w500),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -102,7 +102,7 @@ class CartItemWidget extends StatelessWidget {
                           ),
                           Helper.spaceHorizontal(8),
                           Text(
-                            Const.currencySymbol + cartItem.product.finalPrice.toString(),
+                            Const.currencySymbol + cartItem.product.offerPrice.toString(),
                             style: MyTextStyle(
                                 fontSize: fontSizeLarge,
                                 // color: Colors.grey.shade600,

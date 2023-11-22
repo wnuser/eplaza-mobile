@@ -16,6 +16,10 @@ class NetworkConstantsUtil {
   static String catshops = baseUrl+'/get/category/details/';
   static String subcat = baseUrl+'/get/category/details/';
 
+  static String specificShopPRoducts = baseUrl+'/get/store/products/';
+  static String specificProductDetails = baseUrl+'/product/';
+  static String searchedProducts = baseUrl+'/search/products/stores';
+
 
   static String homemainbanners = baseUrl+'/user/home/banners';
   static String homeadsbanners = baseUrl+'/get/ad/banner';

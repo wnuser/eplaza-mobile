@@ -13,21 +13,22 @@ class Controller extends GetxController {
   Controller();
 
   List<StoreCategory> storeCategories = [
-    StoreCategory('Daily Need',
+    StoreCategory('','Daily Need',
         'http://www.eplaza.in/wp-content/uploads/2022/12/c94df51e52985b4e79b74a63f9780441-1-150x150.jpg'),
-    StoreCategory('Kirana / Supermarket',
+    StoreCategory('','Kirana / Supermarket',
         'http://www.eplaza.in/wp-content/uploads/2022/07/photo-1604719312566-8912e9227c6a-300x300.jpg'),
-    StoreCategory('Tea, Cafe & Fast Food',
+    StoreCategory('','Tea, Cafe & Fast Food',
         'http://www.eplaza.in/wp-content/uploads/2022/12/ff-2-300x300.jpg'),
-    StoreCategory('Fashion',
+    StoreCategory('','Fashion',
         'http://www.eplaza.in/wp-content/uploads/2022/12/a4016739adede59c5d67cb39b2ecbbf7-300x300.jpg'),
-    StoreCategory('Medical & pharmacy',
+    StoreCategory('','Medical & pharmacy',
         'http://www.eplaza.in/wp-content/uploads/2022/12/af093a28f0e430d4bb57c7e75d974bc5-150x150.jpg'),
-    StoreCategory('Furniture',
+    StoreCategory('','Furniture',
         'http://www.eplaza.in/wp-content/uploads/2022/12/24d2f207d099930d69d5379b884c40cc-150x150.jpg'),
     StoreCategory(
+      '',
         'Mobile Computers', 'http://www.eplaza.in/wp-content/uploads/2022/06/COMPUTER.jpg'),
-    StoreCategory('Fancy & Gift Store',
+    StoreCategory('','Fancy & Gift Store',
         'http://www.eplaza.in/wp-content/uploads/2022/07/Waste-management-in-beauty-can-be-improved-if-brands-add-value-and-step-up-communication-says-Certified-Sustainable-300x300.jpg'),
   ];
 
@@ -38,21 +39,23 @@ class Controller extends GetxController {
   }
 
   void init() {
-    shops.add(StoreCategory('Paltan Bazaar',
+    shops.add(StoreCategory('','Paltan Bazaar',
         'http://www.eplaza.in/wp-content/uploads/2022/12/c94df51e52985b4e79b74a63f9780441-1-150x150.jpg'));
-    shops.add(StoreCategory('Tibetan Market',
+    shops.add(StoreCategory('','Tibetan Market',
         'http://www.eplaza.in/wp-content/uploads/2022/07/photo-1604719312566-8912e9227c6a-300x300.jpg'));
     shops.add(StoreCategory(
+      '',
         'Rajpur Road', 'http://www.eplaza.in/wp-content/uploads/2022/12/ff-2-300x300.jpg'));
-    shops.add(StoreCategory('Astley Hall',
+    shops.add(StoreCategory('','Astley Hall',
         'http://www.eplaza.in/wp-content/uploads/2022/12/a4016739adede59c5d67cb39b2ecbbf7-300x300.jpg'));
-    shops.add(StoreCategory('Indira Market',
+    shops.add(StoreCategory('','Indira Market',
         'http://www.eplaza.in/wp-content/uploads/2022/12/af093a28f0e430d4bb57c7e75d974bc5-150x150.jpg'));
-    shops.add(StoreCategory('Connaught Place',
+    shops.add(StoreCategory('','Connaught Place',
         'http://www.eplaza.in/wp-content/uploads/2022/12/24d2f207d099930d69d5379b884c40cc-150x150.jpg'));
     shops.add(StoreCategory(
+      '',
         'Arhat Bazar', 'http://www.eplaza.in/wp-content/uploads/2022/06/COMPUTER.jpg'));
-    shops.add(StoreCategory('Pacific Mall',
+    shops.add(StoreCategory('','Pacific Mall',
         'http://www.eplaza.in/wp-content/uploads/2022/07/Waste-management-in-beauty-can-be-improved-if-brands-add-value-and-step-up-communication-says-Certified-Sustainable-300x300.jpg'));
 
     shopsMain.addAll(shops);

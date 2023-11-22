@@ -32,7 +32,7 @@ import 'package:http/http.dart' as http;
 class Controller extends GetxController {
   RxString status = Status.PROGRESS.obs;
   RxList<HomeMainCategoriesModel> home_main_categories_model = <HomeMainCategoriesModel>[].obs;
-  RxList<GmartCatModel> home_gmart_categories_model = <GmartCatModel>[].obs;
+  RxList<HomeMainCategoriesModel> home_gmart_categories_model = <HomeMainCategoriesModel>[].obs;
   RxList<LatestProductModel> latest_product_model = <LatestProductModel>[].obs;
   RxList<OfferDiscountProductModel> offer_product_model = <OfferDiscountProductModel>[].obs;
 
@@ -103,7 +103,7 @@ class Controller extends GetxController {
           if (response.success!) {
             EasyLoading.dismiss();
 
-            showSuccessMessage(response.message!,context);
+            // showSuccessMessage(response.message!,context);
             // Clear the existing data in the list
             home_main_categories_model.clear();
 
@@ -148,7 +148,7 @@ class Controller extends GetxController {
           if (response.success!) {
             EasyLoading.dismiss();
 
-            showSuccessMessage(response.message!,context);
+            // showSuccessMessage(response.message!,context);
             // Clear the existing data in the list
             home_gmart_categories_model.clear();
 
@@ -162,7 +162,7 @@ class Controller extends GetxController {
                   'message': response.message,
                   'success': response.success,
                 });
-                home_gmart_categories_model.add(gmart_categories);
+                home_gmart_categories_model.add(gmart_categories as HomeMainCategoriesModel);
               }
             }
 
@@ -191,7 +191,7 @@ class Controller extends GetxController {
           if (response.success!) {
             EasyLoading.dismiss();
 
-            showSuccessMessage(response.message!,context);
+            // showSuccessMessage(response.message!,context);
             // Clear the existing data in the list
             ltst_product_model.clear();
 
@@ -254,7 +254,7 @@ class Controller extends GetxController {
 
             EasyLoading.dismiss();
 
-            showSuccessMessage(response.message!,context);
+            // showSuccessMessage(response.message!,context);
             // Clear the existing data in the list
             offer_products_model.clear();
 
@@ -316,7 +316,7 @@ class Controller extends GetxController {
 
             EasyLoading.dismiss();
 
-            showSuccessMessage(response.message!,context);
+            // showSuccessMessage(response.message!,context);
             // Clear the existing data in the list
             random_products_model.clear();
 
@@ -380,7 +380,7 @@ class Controller extends GetxController {
             if (response.success!) {
               EasyLoading.dismiss();
 
-              showSuccessMessage(response.message!,context);
+              // showSuccessMessage(response.message!,context);
 
               if (response.data != null) {
                 for (var banner in response.data!) {
@@ -419,7 +419,7 @@ class Controller extends GetxController {
           if (response.success!) {
             EasyLoading.dismiss();
 
-            showSuccessMessage("success",context);
+            // showSuccessMessage("success",context);
 
             if (response.data != null) {
               for (var banner in response.data!) {

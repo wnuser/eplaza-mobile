@@ -38,7 +38,7 @@ class WishListScreen extends StatelessWidget {
                     return emptyLayout();
                   }
 
-                  return WishlistProducts(_controller.storeProducts);
+                  return WishlistProducts(_controller.storeProductsDynamic);
                 }),
               ),
             ]),

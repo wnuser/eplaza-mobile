@@ -64,8 +64,8 @@ class StoreProductsScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Obx(() => _controller.storeProducts.isNotEmpty
-                  ? Expanded(child: StoreProducts(_controller.storeProducts))
+              Obx(() => _controller.storeProductsDynamic.isNotEmpty
+                  ? Expanded(child: StoreProducts(_controller.storeProductsDynamic))
                   : empty()),
             ]),
       ),

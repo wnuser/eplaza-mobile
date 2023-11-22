@@ -1,3 +1,4 @@
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:e_plaza/modals/store_product.dart';
 import 'package:e_plaza/utils/const.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class Controller extends GetxController {
   RxString status = Status.PROGRESS.obs;
 
   final RxList<StoreProduct> storeProducts = <StoreProduct>[].obs;
+  final RxList<SpecificStoreProducts> storeProductsDynamic = <SpecificStoreProducts>[].obs;
   final RxList<StoreProduct> storeProductsMain = <StoreProduct>[].obs;
 
   Rx<StoreCategory> selectedCategory = StoreCategory('id','Category', '').obs;
@@ -138,6 +140,9 @@ class Controller extends GetxController {
   //   StoreCategory('Gift Store',
   //       'http://www.eplaza.in/wp-content/uploads/2022/07/Waste-management-in-beauty-can-be-improved-if-brands-add-value-and-step-up-communication-says-Certified-Sustainable-300x300.jpg'),
   // ].obs;
+
+
+  
 
   void filterList(String keyword) {
     storeProducts.clear();

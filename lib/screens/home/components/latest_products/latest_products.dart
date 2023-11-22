@@ -22,6 +22,7 @@ class LatestProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return Obx(() {
       return GridView.builder(
         padding: EdgeInsets.symmetric(horizontal: 16),

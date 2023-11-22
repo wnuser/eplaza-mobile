@@ -1,4 +1,5 @@
 import 'package:e_plaza/modals/cart_item.dart';
+import 'package:e_plaza/modals/specific_store_products_model.dart';
 import 'package:e_plaza/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -83,21 +84,21 @@ class CartListingScreen extends StatelessWidget {
         child: Text('You May',
             style: MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
       ));
-      li.add(_otherProducts(_controller.storeProducts));
+      li.add(_otherProducts(_controller.storeProductDynamic));
 
       li.add(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text('Popular Products',
             style: MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
       ));
-      li.add(_otherProducts(_controller.storeProducts.reversed.toList()));
+      li.add(_otherProducts(_controller.storeProductDynamic.reversed.toList()));
 
       li.add(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text('Grammart mela products',
             style: MyTextStyle(fontSize: fontSizeLarge, fontWeight: FontWeight.bold)),
       ));
-      li.add(_otherProducts(_controller.storeProducts));
+      li.add(_otherProducts(_controller.storeProductDynamic));
 
       return ListView(
         shrinkWrap: true,
@@ -143,7 +144,7 @@ class CartListingScreen extends StatelessWidget {
       },
       onMinus: () {
         if (item.quantity <= 1) {
-          CartController.cartItems.remove(item.product.title);
+          CartController.cartItems.remove(item.product.name);
         } else {
           item.quantity--;
         }
@@ -156,7 +157,7 @@ class CartListingScreen extends StatelessWidget {
     double sum = 0;
 
     CartController.cartItems.forEach((key, value) {
-      sum += value.product.finalPrice.toDouble;
+      sum += value.product.offerPrice as double;
     });
 
     return Container(
@@ -212,7 +213,7 @@ class CartListingScreen extends StatelessWidget {
     );
   }
 
-  Widget _otherProducts(List<StoreProduct> products) {
+  Widget _otherProducts(List<SpecificStoreProducts> products) {
     return Container(
       height: 200,
       width: 100.w,
@@ -224,9 +225,11 @@ class CartListingScreen extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: products.length,
         itemBuilder: (c, i) {
-          return GlobalProductItem(products[i], (p) {
-            Get.to(() => StoreProductDetailsScreen(product: p));
-          }, width: 140);
+          return GlobalProductItem(products[0].data![i],
+           (p) {
+            Get.to(() => StoreProductDetailsScreen(product_id: p.id!));
+          }, 
+          width: 140);
         },
       ),
     );

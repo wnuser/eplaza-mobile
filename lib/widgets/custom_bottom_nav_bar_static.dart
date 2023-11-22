@@ -48,10 +48,10 @@ class CustomBottomNavBar extends StatelessWidget {
           assetImage(
             icon,
             color: menuState == active ? ThemeColors.colorPrimary : const Color(0xFFB6B6B6),
-            width: 24,
-            height: 24,
+            width: 16,
+            height: 18,
           ),
-          Helper.spaceVertical(6),
+          Helper.spaceVertical(2),
           Text(
             label,
             style: MyTextStyle(

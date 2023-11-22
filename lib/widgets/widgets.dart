@@ -14,7 +14,7 @@ import 'package:lottie/lottie.dart';
 
 import 'shimmer.dart';
 
-Widget empty() => const SizedBox();
+Widget empty() => const SizedBox(child: Text('no data',style: TextStyle(color: Colors.black45),),);
 
 Widget smallIconImage(String iconName, void Function() cb,
     {double size = smallRoundButtonSize, Color? color, Color? iconColor, double factor = 2}) {
